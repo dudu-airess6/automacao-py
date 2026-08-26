@@ -1,14 +1,12 @@
 from datetime import datetime
 from decimal import Decimal
 from typing import Optional
-from models.farmaceutico import Farmaceutico
-from models.frasco import Frasco
-from models.medico import Prescricao
-from sqlalchemy import String, Numeric, ForeignKey, func # pyright: ignore[reportMissingImports]
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship # type: ignore
 
-class Base(DeclarativeBase):
-    pass
+from sqlalchemy import String, Numeric, ForeignKey, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from data.base import Base
+
 
 class OperacaoFracionamento(Base):
     __tablename__ = "operacoes_fracionamento"
@@ -18,8 +16,10 @@ class OperacaoFracionamento(Base):
     prescricao_id: Mapped[int] = mapped_column(ForeignKey("prescricoes.id"), nullable=False)
     prescricao: Mapped["Prescricao"] = relationship()
 
-    farmaceutico_id: Mapped[int] = mapped_column(ForeignKey("farmaceuticos.id"), nullable=False)
-    farmaceutico: Mapped["Farmaceutico"] = relationship()
+    # CORRIGIDO: a tabela "farmaceuticos" nunca existiu (bug original).
+    # Como Farmaceutico é TPH, a FK correta aponta para "usuarios.id"
+    farmaceutico_id: Mapped[int] = mapped_column(ForeignKey("usuarios.id"), nullable=False)
+    farmaceutico: Mapped["Farmaceutico"] = relationship(back_populates="operacoes_aprovadas")
 
     frasco_original_id: Mapped[int] = mapped_column(ForeignKey("frascos.id"), nullable=False)
     frasco_original: Mapped["Frasco"] = relationship()

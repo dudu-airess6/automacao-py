@@ -1,41 +1,33 @@
 from datetime import datetime
 from decimal import Decimal
+from typing import Optional
+
+from sqlalchemy import String, Numeric, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from data.base import Base
 
 
-class Protocolo:
-    pass
+class Frasco(Base):
+    __tablename__ = "frascos"
 
+    id: Mapped[int] = mapped_column(primary_key=True)
 
-class Frasco:
-    def __init__(
-        self,
-        id: int,
-        volume_atual: Decimal,
-        status: str,
-        data_validade: datetime,
-        localizacao_estoque: str = "",
-        protocolo_id: int = None,
-        protocolo: Protocolo = None
-    ):
-        self.id = id
+    # nullable=False já garante no banco que o campo é obrigatório
+    # (equivalente ao [Required] / ao "if volume_atual is None: raise" que
+    # existia no __init__ da versão em classe pura)
+    volume_atual: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
 
-        # Equivalente ao [Required]
-        if volume_atual is None:
-            raise ValueError("O volume atual do frasco é obrigatório.")
-        self.volume_atual = round(volume_atual, 2)
+    status: Mapped[str] = mapped_column(String(50), nullable=False)
 
-        if not status:
-            raise ValueError("O status do frasco é obrigatório.")
-        self.status = status[:50]
+    data_validade: Mapped[datetime] = mapped_column(nullable=False)
 
-        if data_validade is None:
-            raise ValueError("A data de validade é obrigatória.")
-        self.data_validade = data_validade
+    localizacao_estoque: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
 
-        self.localizacao_estoque = localizacao_estoque[:100]
-
-        self.protocolo_id = protocolo_id
-        self.protocolo = protocolo
+    protocolo_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("protocolos.id"), nullable=True
+    )
+    protocolo: Mapped[Optional["Protocolo"]] = relationship(back_populates="frascos")
 
     def get_quantidade_restante(self) -> Decimal:
         return self.volume_atual

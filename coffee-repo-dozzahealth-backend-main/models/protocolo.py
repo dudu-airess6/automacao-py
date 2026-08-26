@@ -1,52 +1,39 @@
 from typing import List, Optional
 from decimal import Decimal
-from models.farmaceutico import Farmaceutico
-from models.frasco import Frasco
-from pydantic import BaseModel, Field # pyright: ignore[reportMissingImports]
 
-# Presumindo que estas classes existam em outros arquivos
-# class Farmaceutico(BaseModel): ...
-# class Frasco(BaseModel): ...
+from sqlalchemy import String, Numeric, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-class Protocolo(BaseModel):
-    id: Optional[int] = Field(default=None, description="Chave Primária")
-    
-    medicamento: str = Field(
-        ..., 
-        max_length=150, 
-        description="O nome do medicamento é obrigatório. Não pode exceder 150 caracteres."
+from data.base import Base
+
+
+class Protocolo(Base):
+    __tablename__ = "protocolos"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    medicamento: Mapped[str] = mapped_column(String(150), nullable=False)
+
+    composicao: Mapped[str] = mapped_column(String(500), nullable=False)
+
+    area_secao_transversal: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+
+    quantidade_total: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+
+    viscosidade: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+
+    # Sem [Required] no C# original -> pode ser nulo
+    tipo_valvula: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+
+    taxa_gotejamento_padrao: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+
+    # int? no C# -> Optional aqui. FK aponta para "usuarios.id" pois
+    # Farmaceutico é TPH (fica na mesma tabela que Usuario/Medico)
+    farmaceutico_id: Mapped[Optional[int]] = mapped_column(
+        ForeignKey("usuarios.id", ondelete="SET NULL"), nullable=True
     )
-    
-    composicao: str = Field(
-        ..., 
-        max_length=500, 
-        description="A composição é obrigatória. Não pode exceder 500 caracteres."
+    farmaceutico: Mapped[Optional["Farmaceutico"]] = relationship(
+        back_populates="protocolos_gerenciados"
     )
-    
-    area_secao_transversal: Decimal = Field(
-        ..., 
-        max_digits=18, 
-        decimal_places=2, 
-        description="A área de seção transversal é obrigatória."
-    )
-    
-    quantidade_total: Decimal = Field(
-        ..., 
-        max_digits=18, 
-        decimal_places=2, 
-        description="A quantidade total do frasco é obrigatória."
-    )
-    
-    # O C# trata `decimal` como tipo de valor (não-nulo por padrão)
-    viscosidade: Decimal = Field(..., max_digits=18, decimal_places=2)
-    
-    # Sem a tag [Required] no C#, a string pode ser nula
-    tipo_valvula: Optional[str] = Field(default=None, max_length=50)
-    
-    taxa_gotejamento_padrao: Decimal = Field(..., max_digits=18, decimal_places=2)
-    
-    # int? no C# significa que pode ser nulo
-    farmaceutico_id: Optional[int] = None
-    farmaceutico: Optional['Farmaceutico'] = None
-    
-    frascos: List['Frasco'] = Field(default_factory=list)
+
+    frascos: Mapped[List["Frasco"]] = relationship(back_populates="protocolo")

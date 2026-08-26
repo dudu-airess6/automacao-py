@@ -1,47 +1,119 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, computed_field # pyright: ignore[reportMissingImports]
-from datetime import date, timedelta
-import random
+from typing import Optional
+
+from fastapi import FastAPI, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
 import uvicorn
 
-# Inicializa o builder da aplicação
-# O FastAPI já configura o Swagger (OpenAPI) automaticamente e o expõe na rota /docs
-app = FastAPI()
+from data.context import SessionLocal
+from models.usuario import Usuario
+from models.medico import Medico
+from models.farmaceutico import Farmaceutico
 
-summaries = [
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", 
-    "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-]
+app = FastAPI(title="DozzaHealth API")
 
-# Equivalente ao `record` do C# usando Pydantic
-class WeatherForecast(BaseModel):
-    date: date
-    temperatureC: int
-    summary: str | None = None
 
-    # @computed_field garante que a propriedade calculada apareça no JSON de resposta
-    @computed_field
-    @property
-    def temperatureF(self) -> int:
-        return 32 + int(self.temperatureC / 0.5556)
+# Dependency de sessão do banco - equivalente a injetar o
+# ApplicationDbContext via [FromServices] / construtor no ASP.NET Core
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-# Equivalente ao app.MapGet
-@app.get("/weatherforecast", name="GetWeatherForecast")
-def get_weather_forecast() -> list[WeatherForecast]:
-    hoje = date.today()
-    
-    # Equivalente ao Enumerable.Range(1, 5).Select(...)
-    forecast = [
-        WeatherForecast(
-            date=hoje + timedelta(days=i),
-            temperatureC=random.randint(-20, 55),
-            summary=random.choice(summaries)
+
+# ==========================================
+# SCHEMAS (contrato da API - equivalente aos DTOs)
+# ==========================================
+class LoginRequest(BaseModel):
+    usuario: str  # o app.js manda o campo "usuario" com o valor do login
+    senha: str
+
+
+class LoginResponse(BaseModel):
+    mensagem: str
+    usuario_id: int
+    nome: str
+    tipo_usuario: str
+
+
+class CadastroRequest(BaseModel):
+    nome: str
+    login: str
+    senha: str
+    tipo_usuario: str  # "Medico" ou "Farmaceutico"
+
+    # Campos específicos de Medico (opcionais aqui, obrigatórios se tipo_usuario == "Medico")
+    crm: Optional[str] = None
+    especialidade: Optional[str] = None
+
+    # Campo específico de Farmaceutico
+    crf: Optional[str] = None
+
+
+class CadastroResponse(BaseModel):
+    mensagem: str
+    usuario_id: int
+
+
+# ==========================================
+# ROTAS
+# ==========================================
+@app.post("/api/login", response_model=LoginResponse, name="Login")
+def login(dados: LoginRequest, db: Session = Depends(get_db)):
+    usuario = db.query(Usuario).filter(Usuario.login == dados.usuario).first()
+
+    # ATENÇÃO: comparação de senha em texto puro - ver observação abaixo
+    # sobre hashing antes de ir para produção.
+    if usuario is None or usuario.senha_hash != dados.senha:
+        raise HTTPException(status_code=401, detail="Credenciais inválidas.")
+
+    return LoginResponse(
+        mensagem="Login realizado com sucesso.",
+        usuario_id=usuario.id,
+        nome=usuario.nome,
+        tipo_usuario=usuario.tipo_usuario,
+    )
+
+
+@app.post("/api/cadastro", response_model=CadastroResponse, status_code=201, name="CadastrarUsuario")
+def cadastro(dados: CadastroRequest, db: Session = Depends(get_db)):
+    login_existente = db.query(Usuario).filter(Usuario.login == dados.login).first()
+    if login_existente is not None:
+        raise HTTPException(status_code=400, detail="Este login já está em uso.")
+
+    if dados.tipo_usuario == "Medico":
+        novo_usuario = Medico(
+            nome=dados.nome,
+            login=dados.login,
+            senha_hash=dados.senha,  # ver observação sobre hashing
+            crm=dados.crm,
+            especialidade=dados.especialidade,
         )
-        for i in range(1, 6)
-    ]
-    
-    return forecast
+    elif dados.tipo_usuario == "Farmaceutico":
+        novo_usuario = Farmaceutico(
+            nome=dados.nome,
+            login=dados.login,
+            senha_hash=dados.senha,  # ver observação sobre hashing
+            crf=dados.crf,
+        )
+    else:
+        raise HTTPException(
+            status_code=400,
+            detail="tipo_usuario deve ser 'Medico' ou 'Farmaceutico'.",
+        )
+
+    db.add(novo_usuario)
+    db.commit()
+    db.refresh(novo_usuario)
+
+    return CadastroResponse(
+        mensagem="Usuário cadastrado com sucesso.",
+        usuario_id=novo_usuario.id,
+    )
+
 
 # Equivalente ao app.Run()
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("models.main:app", host="127.0.0.1", port=8000, reload=True)

@@ -1,25 +1,19 @@
-from typing import List, Optional
+from typing import List
 from decimal import Decimal
-from models.medico import Prescricao
-from pydantic import BaseModel, Field # pyright: ignore[reportMissingImports]
 
-# Presumindo que a classe Prescricao exista em outro arquivo
-# class Prescricao(BaseModel): ...
+from sqlalchemy import String, Numeric
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-class Paciente(BaseModel):
-    id: Optional[int] = Field(default=None, description="Chave Primária")
-    
-    nome: str = Field(
-        ..., 
-        max_length=150, 
-        description="O nome do paciente é obrigatório. Não pode exceder 150 caracteres."
-    )
-    
-    peso: Decimal = Field(
-        ..., 
-        max_digits=18, 
-        decimal_places=2, 
-        description="O peso do paciente é obrigatório."
-    )
-    
-    prescricoes: List['Prescricao'] = Field(default_factory=list)
+from data.base import Base
+
+
+class Paciente(Base):
+    __tablename__ = "pacientes"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    nome: Mapped[str] = mapped_column(String(150), nullable=False)
+
+    peso: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
+
+    prescricoes: Mapped[List["Prescricao"]] = relationship(back_populates="paciente")

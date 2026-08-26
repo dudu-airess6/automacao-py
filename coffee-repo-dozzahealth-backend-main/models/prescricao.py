@@ -1,12 +1,11 @@
 from datetime import datetime
 from decimal import Decimal
-from models.medico import Medico
-from models.paciente import Paciente
-from sqlalchemy import String, Numeric, ForeignKey, func # pyright: ignore[reportMissingImports]
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship # pyright: ignore[reportMissingImports]
 
-class Base(DeclarativeBase):
-    pass
+from sqlalchemy import String, Numeric, ForeignKey, func
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from data.base import Base
+
 
 class Prescricao(Base):
     __tablename__ = "prescricoes"
@@ -15,12 +14,19 @@ class Prescricao(Base):
 
     dosagem: Mapped[Decimal] = mapped_column(Numeric(18, 2), nullable=False)
 
-    paciente_id: Mapped[int] = mapped_column(ForeignKey("pacientes.id"), nullable=False)
-    # Adicionado back_populates caso você queira vincular a lista criada no modelo Paciente
+    paciente_id: Mapped[int] = mapped_column(
+        ForeignKey("pacientes.id", ondelete="RESTRICT"), nullable=False
+    )
+    # back_populates precisa existir do lado de Paciente também
+    # (Paciente ainda está como Pydantic - ver observação abaixo)
     paciente: Mapped["Paciente"] = relationship(back_populates="prescricoes")
 
-    medico_id: Mapped[int] = mapped_column(ForeignKey("medicos.id"), nullable=False)
-    medico: Mapped["Medico"] = relationship()
+    # CORRIGIDO: como Medico é TPH (fica na tabela "usuarios", não "medicos"),
+    # a FK precisa apontar para "usuarios.id"
+    medico_id: Mapped[int] = mapped_column(
+        ForeignKey("usuarios.id", ondelete="RESTRICT"), nullable=False
+    )
+    medico: Mapped["Medico"] = relationship(back_populates="prescricoes")
 
     medicamento_nome: Mapped[str] = mapped_column(String(150), nullable=False)
 
