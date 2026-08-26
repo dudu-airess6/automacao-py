@@ -1,29 +1,34 @@
-from typing import Optional
-from pydantic import BaseModel, Field # pyright: ignore[reportMissingImports]
-from abc import ABC
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
 
-class Usuario(BaseModel, ABC):
-    id: Optional[int] = Field(default=None, description="Chave Primária")
-    
-    nome: str = Field(
-        ..., 
-        max_length=100, 
-        description="O nome do usuário é obrigatório. Não pode exceder 100 caracteres."
-    )
-    
-    login: str = Field(
-        ..., 
-        min_length=3,
-        max_length=50, 
-        description="O login deve ter entre 3 e 50 caracteres."
-    )
-    
-    senha_hash: str = Field(
-        ..., 
-        min_length=8,
-        max_length=255, 
-        description="A senha deve ter no mínimo 8 caracteres."
-    )
+from data.base import Base
+
+
+class Usuario(Base):
+    """
+    Classe base da hierarquia TPH (Table Per Hierarchy).
+    Equivalente ao .HasDiscriminator<string>("TipoUsuario") do EF.
+
+    Todas as subclasses (Medico, Farmaceutico) ficam armazenadas nesta
+    mesma tabela "usuarios", diferenciadas pela coluna tipo_usuario.
+    """
+    __tablename__ = "usuarios"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    nome: Mapped[str] = mapped_column(String(100))
+
+    login: Mapped[str] = mapped_column(String(50), unique=True)
+
+    senha_hash: Mapped[str] = mapped_column(String(255))
+
+    # Coluna discriminadora (equivalente ao .HasValue<T>("...") do EF)
+    tipo_usuario: Mapped[str] = mapped_column(String(50))
+
+    __mapper_args__ = {
+        "polymorphic_on": "tipo_usuario",
+        "polymorphic_identity": "usuario",
+    }
 
     def login_sistema(self) -> None:
         # Lógica de login

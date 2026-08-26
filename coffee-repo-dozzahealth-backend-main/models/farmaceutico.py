@@ -1,28 +1,28 @@
 from typing import List
 
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-class Usuario:
-    def __init__(self, nome: str = ""):
-        self.nome = nome
-
-
-class Protocolo:
-    pass
-
-
-class OperacaoFracionamento:
-    pass
+from models.usuario import Usuario
 
 
 class Farmaceutico(Usuario):
-    def __init__(self, nome: str = "", crf: str = ""):
-        super().__init__(nome)
+    """
+    Subclasse TPH de Usuario.
+    Assim como Medico, adiciona a coluna abaixo (crf) na mesma
+    tabela "usuarios" - equivalente ao .HasValue<Farmaceutico>("Farmaceutico") do EF.
+    """
+    __mapper_args__ = {
+        "polymorphic_identity": "Farmaceutico",
+    }
 
-        # Equivalente ao [StringLength(20)]
-        self.crf = crf[:20]
+    # nullable=True porque, na mesma tabela, médicos não têm CRF
+    crf: Mapped[str] = mapped_column(String(20), nullable=True)
 
-        self.protocolos_gerenciados: List[Protocolo] = []
-        self.operacoes_aprovadas: List[OperacaoFracionamento] = []
+    # Relacionamentos One-to-Many (os back_populates precisam existir
+    # do outro lado, em Protocolo e OperacaoFracionamento - próximo passo)
+    protocolos_gerenciados: Mapped[List["Protocolo"]] = relationship(back_populates="farmaceutico")
+    operacoes_aprovadas: Mapped[List["OperacaoFracionamento"]] = relationship(back_populates="farmaceutico")
 
     def selecionar_protocolo(self):
         # Lógica para selecionar protocolo
