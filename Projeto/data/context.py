@@ -1,38 +1,26 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker
-
 from data.base import Base
 
-# 1. Configura a string de conexão (equivalente à "ConnectionStrings" do appsettings.json)
-#
-# Formato: mssql+pyodbc://usuario:senha@servidor/NomeDoBanco?driver=ODBC+Driver+17+for+SQL+Server
-#
-# Exemplos:
-#   - Servidor local com autenticação SQL:
-#       DATABASE_URL = "mssql+pyodbc://sa:SuaSenha123@localhost/DozzaHealth?driver=ODBC+Driver+17+for+SQL+Server"
-#
-#   - Servidor local com Windows Authentication (sem usuário/senha):
-#       DATABASE_URL = "mssql+pyodbc://localhost/DozzaHealth?driver=ODBC+Driver+17+for+SQL+Server&trusted_connection=yes"
-#
-#   - Instância nomeada (ex: SQL Server Express):
-#       DATABASE_URL = "mssql+pyodbc://localhost\\SQLEXPRESS/DozzaHealth?driver=ODBC+Driver+17+for+SQL+Server"
-#
-# Troque os valores abaixo pelos do seu ambiente:
-DATABASE_URL = (
-    "mssql+pyodbc://USUARIO:SENHA@SERVIDOR/DozzaHealth"
-    "?driver=ODBC+Driver+17+for+SQL+Server"
+DATABASE_URL = "sqlite:///./database.db"
+
+engine = create_engine(
+    DATABASE_URL, 
+    echo=False,  # Desativa o log SQL para não sobrecarregar o terminal no teste de carga
+    connect_args={
+        "check_same_thread": False,
+        "timeout": 30  # Tempo limite para aguardar liberamento do banco sem travar com erro 500
+    }
 )
 
-# 2. Cria a Engine (equivalente a registrar o DbContext com .UseSqlServer(...))
-engine = create_engine(DATABASE_URL, echo=True)
+# Ativa o modo WAL no SQLite para permitir leituras/escritas concorrentes
+@event.listens_for(engine, "connect")
+def set_sqlite_pragma(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("PRAGMA journal_mode=WAL")
+    cursor.close()
 
-# 3. Cria a fábrica de sessões (equivalente ao seu ApplicationDbContext)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-
-# Função auxiliar para criar as tabelas
-# Equivalente ao database.EnsureCreated() (para dev/testes rápidos).
-# Para produção, o ideal é usar Alembic (equivalente às Migrations do EF)
-# em vez de criar as tabelas assim direto.
 def criar_banco():
     Base.metadata.create_all(bind=engine)

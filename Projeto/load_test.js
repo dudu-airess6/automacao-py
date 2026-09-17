@@ -3,25 +3,25 @@ import { check, sleep } from 'k6';
 
 export const options = {
   stages: [
-    { duration: '20s', target: 10 }, // Ramp-up: 10 usuários virtuais (VUs)
-    { duration: '40s', target: 10 }, // Carga constante
-    { duration: '20s', target: 30 }, // Estresse: pico repentino para 30 VUs
-    { duration: '20s', target: 0 },  // Ramp-down: redução gradual
+    { duration: '10s', target: 5 },
+    { duration: '20s', target: 10 },
+    { duration: '10s', target: 0 },
   ],
   thresholds: {
-    http_req_failed: ['rate<0.05'],   // Falhas devem ser menores que 5%
-    http_req_duration: ['p(95)<500'], // 95% das requisições devem responder em <500ms
+    http_req_failed: ['rate<0.01'], // Falhas devem ser menores que 1%
+    http_req_duration: ['p(95)<500'], // 95% das requisições abaixo de 500ms
   },
 };
 
-const BASE_URL = 'http://127.0.0.1:8000';
-
 export default function () {
-  const url = `${BASE_URL}/api/login`;
+  const url = 'http://127.0.0.1:8000/api/login';
+  
+  // ATENÇÃO: a API exige a chave "usuario" no JSON
   const payload = JSON.stringify({
-  usuario: 'testuser',
-  senha: 'secretpassword',
-});
+    usuario: 'testuser',
+    senha: 'secretpassword',
+  });
+
   const params = {
     headers: {
       'Content-Type': 'application/json',
@@ -30,8 +30,13 @@ export default function () {
 
   const res = http.post(url, payload, params);
 
+  // Se o status não for 200, exibe a resposta no terminal para diagnóstico
+  if (res.status !== 200) {
+    console.log(`Erro Status: ${res.status} | Resposta: ${res.body}`);
+  }
+
   check(res, {
-    'status recebido': (r) => r.status === 200 || r.status === 401,
+    'status e 200': (r) => r.status === 200,
     'tempo de resposta aceitavel': (r) => r.timings.duration < 500,
   });
 

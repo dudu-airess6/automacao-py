@@ -1,16 +1,29 @@
-from typing import Optional
-from fastapi import FastAPI, Depends, HTTPException
-from pydantic import BaseModel
-from sqlalchemy.orm import Session
-import uvicorn
-
 from data.base import Base
 from data.context import SessionLocal, engine
 from models.usuario import Usuario
 from models.medico import Medico
 from models.farmaceutico import Farmaceutico
 
-# Cria as tabelas no banco de dados se não existirem
+# Carrega todos os modelos para registrar os mappers do SQLAlchemy
+try:
+    from models.protocolo import Protocolo
+except ImportError:
+    pass
+
+try:
+    from models.prescricao import Prescricao
+except ImportError:
+    pass
+
+try:
+    from models.paciente import Paciente
+except ImportError:
+    pass
+
+try:
+    from models.medicamento import Medicamento
+except ImportError:
+    pass
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DozzaHealth API")
@@ -22,11 +35,31 @@ def get_db():
     finally:
         db.close()
 
-# ==========================================
+# Garantia de usuário de teste para o k6
+@app.on_event("startup")
+def startup_event():
+    db = SessionLocal()
+    try:
+        test_user = db.query(Usuario).filter(Usuario.login == "testuser").first()
+        if not test_user:
+            novo_teste = Farmaceutico(
+                nome="Usuario Teste k6",
+                login="testuser",
+                senha_hash="secretpassword",
+                crf="12345"
+            )
+            db.add(novo_teste)
+            db.commit()
+            print(">>> [SUCESSO] Usuario 'testuser' pronto para testes do k6!")
+    except Exception as e:
+        print(f">>> [ERRO NO STARTUP]: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
 # SCHEMAS
-# ==========================================
 class LoginRequest(BaseModel):
-    usuario: str  # ATENÇÃO: o k6 DEVE enviar a chave "usuario", não "login"
+    usuario: str
     senha: str
 
 class LoginResponse(BaseModel):
@@ -48,22 +81,35 @@ class CadastroResponse(BaseModel):
     mensagem: str
     usuario_id: int
 
-# ==========================================
 # ROTAS
-# ==========================================
 @app.post("/api/login", response_model=LoginResponse, name="Login")
 def login(dados: LoginRequest, db: Session = Depends(get_db)):
-    usuario = db.query(Usuario).filter(Usuario.login == dados.usuario).first()
+    try:
+        usuario = db.query(Usuario).filter(Usuario.login == dados.usuario).first()
 
-    if usuario is None or usuario.senha_hash != dados.senha:
-        raise HTTPException(status_code=401, detail="Credenciais inválidas.")
+        if usuario is None:
+            raise HTTPException(status_code=401, detail="Credenciais inválidas.")
 
-    return LoginResponse(
-        mensagem="Login realizado com sucesso.",
-        usuario_id=usuario.id,
-        nome=usuario.nome,
-        tipo_usuario=usuario.tipo_usuario,
-    )
+        senha_no_banco = getattr(usuario, "senha_hash", None) or getattr(usuario, "senha", None)
+        if senha_no_banco != dados.senha:
+            raise HTTPException(status_code=401, detail="Credenciais inválidas.")
+
+        user_id = getattr(usuario, "id", None) or getattr(usuario, "id_usuario", None)
+
+        return LoginResponse(
+            mensagem="Login realizado com sucesso.",
+            usuario_id=user_id,
+            nome=getattr(usuario, "nome", "Usuario"),
+            tipo_usuario=getattr(usuario, "tipo_usuario", None) or "Farmaceutico",
+        )
+    except HTTPException as he:
+        raise he
+    except Exception as e:
+        print("\n" + "="*50)
+        print("TRACEBACK DO ERRO NO LOGIN:")
+        traceback.print_exc()
+        print("="*50 + "\n")
+        raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
 @app.post("/api/cadastro", response_model=CadastroResponse, status_code=201, name="CadastrarUsuario")
 def cadastro(dados: CadastroRequest, db: Session = Depends(get_db)):
@@ -98,7 +144,7 @@ def cadastro(dados: CadastroRequest, db: Session = Depends(get_db)):
 
     return CadastroResponse(
         mensagem="Usuário cadastrado com sucesso.",
-        usuario_id=novo_usuario.id,
+        usuario_id=getattr(novo_usuario, "id", None) or getattr(novo_usuario, "id_usuario", None),
     )
 
 if __name__ == "__main__":
