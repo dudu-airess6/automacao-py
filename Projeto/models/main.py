@@ -5,6 +5,7 @@ import pkgutil
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware  # IMPORTADO
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import uvicorn
@@ -50,6 +51,15 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="DozzaHealth API", lifespan=lifespan)
+
+# CONFIGURAÇÃO DE CORS (LIBERA O FRONTEND)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()

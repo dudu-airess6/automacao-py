@@ -3,16 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCadastrar = document.getElementById('btnCadastrar');
     const mensagemFeedback = document.getElementById('mensagemFeedback');
 
-    // Lógica para o Login
     loginForm.addEventListener('submit', async (evento) => {
-        evento.preventDefault(); // Evita que a página recarregue
+        evento.preventDefault();
 
         const credencial = document.getElementById('credencial').value;
         const senha = document.getElementById('senha').value;
 
         try {
-            // Aqui você substitui pela URL da sua API em Python (ex: http://localhost:5000/api/login)
-            const resposta = await fetch('http://localhost:5000/api/login', {
+            // Porta atualizada para 8000 (FastAPI)
+            const resposta = await fetch('http://127.0.0.1:8000/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,23 +26,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (resposta.ok) {
                 mensagemFeedback.style.color = '#77dd77';
-                mensagemFeedback.textContent = 'Login realizado com sucesso! Redirecionando...';
-                // window.location.href = '/dashboard.html'; // Redirecionar usuário
+                mensagemFeedback.textContent = dados.mensagem || 'Login realizado com sucesso! Redirecionando...';
+                // window.location.href = '/dashboard.html';
             } else {
-                mensagemFeedback.style.color = '#ef4444'; // Vermelho para erro
-                mensagemFeedback.textContent = dados.mensagem || 'Credenciais inválidas.';
+                mensagemFeedback.style.color = '#ef4444';
+                // Captura a chave 'detail' padronizada do FastAPI
+                mensagemFeedback.textContent = dados.detail || dados.mensagem || 'Credenciais inválidas.';
             }
 
         } catch (erro) {
             console.error('Erro na requisição:', erro);
             mensagemFeedback.style.color = '#ef4444';
-            mensagemFeedback.textContent = 'Erro de conexão com o servidor. O backend Python está rodando?';
+            mensagemFeedback.textContent = 'Erro de conexão com o servidor. Verifique se o backend está ativo na porta 8000.';
         }
     });
 
-    // Lógica para o Cadastro (Navegação ou abertura de Modal)
     btnCadastrar.addEventListener('click', () => {
-        // Redireciona para a página de cadastro ou altera o formulário atual
         mensagemFeedback.style.color = '#4a4a4a';
         mensagemFeedback.textContent = 'Redirecionando para a tela de registro...';
         // window.location.href = '/cadastro.html'; 
