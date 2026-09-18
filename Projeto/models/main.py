@@ -2,6 +2,8 @@ from typing import Optional
 import traceback
 import importlib
 import pkgutil
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -11,7 +13,7 @@ from data.base import Base
 from data.context import SessionLocal, engine
 import models
 
-# Importa automaticamente todos os arquivos da pasta 'models' para resolver todos os mappers
+# Importa automaticamente todos os arquivos da pasta 'models' para resolver mappers
 for _, module_name, _ in pkgutil.iter_modules(models.__path__):
     if module_name != "main":
         importlib.import_module(f"models.{module_name}")
@@ -22,18 +24,9 @@ from models.medico import Medico
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="DozzaHealth API")
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-# Garantia de usuário de teste para o k6
-@app.on_event("startup")
-def startup_event():
+# Gerenciador do ciclo de vida da aplicação (Lifespan)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     db = SessionLocal()
     try:
         test_user = db.query(Usuario).filter(Usuario.login == "testuser").first()
@@ -52,6 +45,16 @@ def startup_event():
     except Exception as e:
         print(f">>> [ERRO NO STARTUP]: {e}")
         db.rollback()
+    finally:
+        db.close()
+    yield
+
+app = FastAPI(title="DozzaHealth API", lifespan=lifespan)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
     finally:
         db.close()
 
