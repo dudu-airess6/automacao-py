@@ -1,29 +1,25 @@
+from typing import Optional
+import traceback
+import importlib
+import pkgutil
+from fastapi import FastAPI, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+import uvicorn
+
 from data.base import Base
 from data.context import SessionLocal, engine
+import models
+
+# Importa automaticamente todos os arquivos da pasta 'models' para resolver todos os mappers
+for _, module_name, _ in pkgutil.iter_modules(models.__path__):
+    if module_name != "main":
+        importlib.import_module(f"models.{module_name}")
+
 from models.usuario import Usuario
-from models.medico import Medico
 from models.farmaceutico import Farmaceutico
+from models.medico import Medico
 
-# Carrega todos os modelos para registrar os mappers do SQLAlchemy
-try:
-    from models.protocolo import Protocolo
-except ImportError:
-    pass
-
-try:
-    from models.prescricao import Prescricao
-except ImportError:
-    pass
-
-try:
-    from models.paciente import Paciente
-except ImportError:
-    pass
-
-try:
-    from models.medicamento import Medicamento
-except ImportError:
-    pass
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="DozzaHealth API")
@@ -51,6 +47,8 @@ def startup_event():
             db.add(novo_teste)
             db.commit()
             print(">>> [SUCESSO] Usuario 'testuser' pronto para testes do k6!")
+        else:
+            print(">>> [SUCESSO] Usuario 'testuser' já existe e está pronto!")
     except Exception as e:
         print(f">>> [ERRO NO STARTUP]: {e}")
         db.rollback()
