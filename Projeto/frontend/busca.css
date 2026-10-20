@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eef2f5;
+    color: #4a4a4a;
+    min-height: 100vh;
+}
+
+/* Header Topbar */
+.topbar {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo h2 {
+    color: #4a4a4a;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.logo h2 span {
+    color: #77dd77;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#labelUsuario {
+    font-weight: 600;
+    color: #4a4a4a;
+    font-size: 14px;
+}
+
+.btn-logout {
+    background-color: transparent;
+    color: #ef4444;
+    border: 1px solid #fca5a5;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #fef2f2;
+    border-color: #ef4444;
+}
+
+/* Conteúdo Principal */
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* Card Superior de Busca */
+.search-section {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+}
+
+.search-section h1 {
+    color: #4a4a4a;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.search-section p {
+    color: #888888;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.search-box input, 
+.search-box select {
+    padding: 12px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #4a4a4a;
+    background-color: #f9fafb;
+    outline: none;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 260px;
+}
+
+.search-box select {
+    min-width: 160px;
+}
+
+.search-box input:focus, 
+.search-box select:focus {
+    border-color: #77dd77;
+    background-color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #77dd77;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #66cc66;
+}
+
+/* Resultados da Busca */
+.results-header {
+    margin-bottom: 15px;
+    color: #6b7280;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* Cards Individuais de Medicamento */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #77dd77;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    color: #4a4a4a;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.card p {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.card p strong {
+    color: #4a4a4a;
+}
+
+.tag-forma {
+    align-self: flex-start;
+    background-color: #f0fdf4;
+    color: #278527;
+    border: 1px solid #bbf7d0;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    margin-top: 12px;
+    text-transform: capitalize;
+}
+
+/* Paginação */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.pagination-controls button {
+    background-color: #ffffff;
+    color: #77dd77;
+    border: 1px solid #77dd77;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    background-color: #f0fdf4;
+}
+
+.pagination-controls button:disabled {
+    opacity: 0.4;
+    border-color: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+#labelPagina {
+    font-size: 14px;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.hidden {
+    display: none;
+}

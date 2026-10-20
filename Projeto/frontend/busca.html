@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DozzaHealth - Busca de Medicamentos Pediátricos</title>
+    <link rel="stylesheet" href="busca.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="logo">
+            <h2>Dozza<span>Health</span></h2>
+        </div>
+        <div class="user-info">
+            <span id="labelUsuario">Carregando...</span>
+            <button id="btnLogout" class="btn-logout">Sair</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <h1>Busca de Prescrições Líquidas</h1>
+            <p>Acesso restrito a farmacêuticos credenciados</p>
+
+            <form id="formBusca" class="search-box">
+                <input 
+                    type="text" 
+                    id="inputQuery" 
+                    placeholder="Digite o nome comercial, princípio ativo ou instrução..."
+                />
+                <select id="selectForma">
+                    <option value="">Todas as formas</option>
+                    <option value="gotas">Gotas</option>
+                    <option value="xarope">Xarope</option>
+                    <option value="suspensão">Suspensão</option>
+                    <option value="solução">Solução</option>
+                </select>
+                <button type="submit" class="btn-primary">Pesquisar</button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <div class="results-header">
+                <span id="infoTotal">Aguardando busca...</span>
+            </div>
+
+            <div id="gridResultados" class="grid-cards">
+                <!-- Cards serão injetados dinamicamente via JS -->
+            </div>
+
+            <div id="paginacao" class="pagination-controls hidden">
+                <button id="btnAnterior" disabled>&laquo; Anterior</button>
+                <span id="labelPagina">Página 1</span>
+                <button id="btnProxima">Próxima &raquo;</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
