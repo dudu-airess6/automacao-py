@@ -1,22 +1,21 @@
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Depends, Query
 from typing import Optional
-from .schemas import ResultadoBuscaResponse
+from search.auth import verificar_acesso_farmaceutico
 from .services import busca_service
+from .schemas import RespostaBuscaSchema
 
 router = APIRouter(prefix="/api/v1", tags=["Busca de Prescrições"])
 
-@router.get("/buscar", response_model=ResultadoBuscaResponse, summary="Buscar prescrições de remédios líquidos")
+@router.get(
+    "/buscar", 
+    response_model=RespostaBuscaSchema,
+    summary="Busca de medicamentos líquidos (Acesso exclusivo para Farmacêuticos)"
+)
 def buscar_medicamentos(
-    q: Optional[str] = Query(None, description="Termo para busca por Nome Comercial ou Princípio Ativo (Ex: Dipirona)"),
-    forma: Optional[str] = Query(None, description="Filtrar por forma farmacêutica (Ex: Gotas, Xarope, Suspensão, Solução)")
+    q: Optional[str] = Query(None, description="Termo de busca"),
+    forma: Optional[str] = Query(None, description="Filtro por forma farmacêutica"),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, ge=1, le=100),
+    usuario_logado: dict = Depends(verificar_acesso_farmaceutico)
 ):
-    try:
-        resultados = busca_service.buscar(termo=q, forma=forma)
-        return ResultadoBuscaResponse(
-            total_encontrados=len(resultados),
-            termo_buscado=q,
-            forma_filtrada=forma,
-            resultados=resultados
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro interno na busca: {str(e)}")
+    return busca_service.buscar(q=q, forma=forma, page=page, limit=limit)

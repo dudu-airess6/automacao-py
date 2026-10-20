@@ -1,17 +1,14 @@
-from typing import List, Optional
 from pydantic import BaseModel
+from typing import List, Any, Optional
 
-class MedicamentoLiquido(BaseModel):
-    id: int
-    nome_comercial: str
-    principio_ativo: str
-    forma_farmaceutica: str
-    concentracao: str
-    dosagem_padrao: str
-    instrucoes_prescricao: str
+class MedicamentoSchema(BaseModel):
+    id: Optional[int] = None
+    nome: Optional[str] = None
+    forma: Optional[str] = None
+    concentracao: Optional[str] = None
 
-class ResultadoBuscaResponse(BaseModel):
+class RespostaBuscaSchema(BaseModel):
     total_encontrados: int
-    termo_buscado: Optional[str] = None
-    forma_filtrada: Optional[str] = None
-    resultados: List[MedicamentoLiquido]
+    pagina: int
+    limite: int
+    resultados: List[Any]

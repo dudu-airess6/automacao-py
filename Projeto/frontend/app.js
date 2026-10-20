@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const senha = document.getElementById('senha').value;
 
         try {
-            // Porta atualizada para 8000 (FastAPI)
-            const resposta = await fetch('http://127.0.0.1:8000/api/login', {
+            // Rota e porta atualizadas para a API unificada na porta 8001
+            const resposta = await fetch('http://127.0.0.1:8001/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -25,19 +25,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const dados = await resposta.json();
 
             if (resposta.ok) {
+                // Salva o Token JWT e as informações do perfil para uso na Busca e RBAC
+                if (dados.access_token) {
+                    localStorage.setItem('token', dados.access_token);
+                    localStorage.setItem('tipo_usuario', dados.tipo_usuario);
+                    localStorage.setItem('nome_usuario', dados.nome);
+                }
+
                 mensagemFeedback.style.color = '#77dd77';
                 mensagemFeedback.textContent = dados.mensagem || 'Login realizado com sucesso! Redirecionando...';
-                // window.location.href = '/dashboard.html';
+                
+                // Exemplo de redirecionamento:
+                // setTimeout(() => { window.location.href = '/busca.html'; }, 1200);
             } else {
                 mensagemFeedback.style.color = '#ef4444';
-                // Captura a chave 'detail' padronizada do FastAPI
                 mensagemFeedback.textContent = dados.detail || dados.mensagem || 'Credenciais inválidas.';
             }
 
         } catch (erro) {
             console.error('Erro na requisição:', erro);
             mensagemFeedback.style.color = '#ef4444';
-            mensagemFeedback.textContent = 'Erro de conexão com o servidor. Verifique se o backend está ativo na porta 8000.';
+            mensagemFeedback.textContent = 'Erro de conexão com o servidor. Verifique se o backend está ativo na porta 8001.';
         }
     });
 

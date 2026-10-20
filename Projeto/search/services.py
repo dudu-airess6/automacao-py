@@ -1,8 +1,7 @@
 import csv
 import os
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
-# Calcula o caminho dinâmico para encontrar a pasta 'data' na raiz do projeto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(BASE_DIR, "data", "medicamentos_liquidos.csv")
 
@@ -19,12 +18,19 @@ class BuscaMedicamentosService:
         with open(self.csv_path, mode="r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                row["id"] = int(row["id"])
+                if "id" in row and row["id"]:
+                    row["id"] = int(row["id"])
                 self.medicamentos.append(row)
 
         print(f">>> [DATASET] {len(self.medicamentos)} medicamentos líquidos carregados na memória!")
 
-    def buscar(self, termo: Optional[str] = None, forma: Optional[str] = None) -> List[dict]:
+    def buscar(
+        self, 
+        q: Optional[str] = None, 
+        forma: Optional[str] = None, 
+        page: int = 1, 
+        limit: int = 10
+    ) -> Dict[str, Any]:
         resultados = self.medicamentos
 
         # Filtro por forma farmacêutica (ex: gotas, xarope, suspensão, solução)
@@ -32,19 +38,31 @@ class BuscaMedicamentosService:
             forma_clean = forma.strip().lower()
             resultados = [
                 m for m in resultados
-                if forma_clean in m["forma_farmaceutica"].lower()
+                if forma_clean in m.get("forma_farmaceutica", "").lower()
             ]
 
         # Filtro por termo (Nome Comercial, Princípio Ativo ou Instruções)
-        if termo:
-            termo_clean = termo.strip().lower()
+        if q:
+            termo_clean = q.strip().lower()
             resultados = [
                 m for m in resultados
-                if termo_clean in m["nome_comercial"].lower()
-                or termo_clean in m["principio_ativo"].lower()
-                or termo_clean in m["instrucoes_prescricao"].lower()
+                if termo_clean in m.get("nome_comercial", "").lower()
+                or termo_clean in m.get("principio_ativo", "").lower()
+                or termo_clean in m.get("instrucoes_prescricao", "").lower()
             ]
 
-        return resultados
+        # Lógica de Paginação
+        total = len(resultados)
+        inicio = (page - 1) * limit
+        fim = inicio + limit
+        resultados_paginados = resultados[inicio:fim]
+
+        # Estrutura esperada pelo RespostaBuscaSchema
+        return {
+            "total_encontrados": total,
+            "pagina": page,
+            "limite": limit,
+            "resultados": resultados_paginados
+        }
 
 busca_service = BuscaMedicamentosService()
