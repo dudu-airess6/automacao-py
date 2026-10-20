@@ -1,51 +1,201 @@
 id,nome_comercial,principio_ativo,forma_farmaceutica,concentracao,dosagem_padrao,instrucoes_prescricao
 1,Dipirona Gotas,Dipirona Sódica,Gotas (Solução Oral),500mg/ml,1 gota/kg por dose,Tomar via oral de 6 em 6 horas em caso de dor ou febre.
-2,Amoxicilina Suspensão,Amoxicilina,Suspensão Oral,250mg/5ml,5ml de 8 em 8 horas,Tomar por 7 a 10 dias consecutivos. Agitar antes de usar.
-3,Paracetamol Xarope,Paracetamol,Xarope,200mg/ml,10 a 15mg/kg por dose,Não ultrapassar 4 doses diárias. Uso adulto e pediátrico.
-4,Prednisolona Solução,Fosfato Sódico de Prednisolona,Solução Oral,3mg/ml,1mg/kg por dia,Tomar em dose única pela manhã durante 5 dias.
-5,Ibuprofeno Gotas,Ibuprofeno,Gotas (Suspensão Oral),100mg/ml,1 gota/kg por dose,Tomar de 6 em 6 horas com alimentos. Máximo 40 gotas/dose.
-6,Desloratadina Xarope,Desloratadina,Xarope,0.5mg/ml,5ml uma vez ao dia,Tomar preferencialmente à noite.
-7,Acebrofilina Xarope Pediátrico,Acebrofilina,Xarope,25mg/5ml,5ml de 12 em 12 horas,Indicado para broncodilatação e ação mucolítica.
-8,Dramin B6 Gotas,Dimenidrinato + Cloridrato de Piridoxina,Gotas (Solução Oral),25mg/ml + 5mg/ml,1 gota/kg por dose,Tomar 30 minutos antes de viagens ou em caso de náusea.
-9,Simeticona Gotas,Simeticona,Gotas (Emulsão Oral),75mg/ml,20 a 30 gotas,Tomar de 8 em 8 horas para alívio de gases abdominais.
-10,Claritromicina Suspensão,Claritromicina,Suspensão Oral,125mg/5ml,7.5mg/kg de 12 em 12 horas,Uso contínuo por 7 a 14 dias. Manter em temperatura ambiente.
-11,Azitromicina Suspensão,Azitromicina Monoidratada,Suspensão Oral,200mg/5ml,10mg/kg uma vez ao dia,Tomar durante 3 a 5 dias em jejum ou 1h antes das refeições.
-12,Salbutamol Xarope,Sulfato de Salbutamol,Xarope,2mg/5ml,5ml a 10ml de 6 em 6 horas,Broncodilatador para alívio de broncoespasmo.
-13,Ambroxol Xarope Adulto,Cloridrato de Ambroxol,Xarope,30mg/5ml,5ml de 8 em 8 horas,Mucolítico e expectorante para tosses produtivas.
-14,Loratadina Xarope,Loratadina,Xarope,1mg/ml,10ml uma vez ao dia,Anti-histamínico para alívio de rinite e urticária.
-15,Dexametasona Elixir,Dexametasona,Elixir,0.1mg/ml,15ml ao dia fracionados,Corticosteróide para processos inflamatórios graves.
-16,Ondansetrona Solução Oral,Cloridrato de Ondansetrona,Solução Oral,4mg/5ml,5ml de 8 em 8 horas,Antihemético indicado para prevenção de náuseas e vômitos.
-17,Metoclopramida Gotas,Cloridrato de Metoclopramida,Gotas (Solução Oral),4mg/ml,20 a 40 gotas,Tomar 30 minutos antes das refeições.
-18,Bromoprida Gotas,Bromoprida,Gotas (Solução Oral),4mg/ml,1 a 2 gotas por kg,Tomar de 8 em 8 horas para distúrbios de motilidade gastrintestinal.
-19,Nimesulida Gotas,Nimesulida,Gotas (Suspensão Oral),50mg/ml,1 gota por kg,Tomar de 12 em 12 horas após as refeições por no máximo 5 dias.
-20,Hedera Helix Xarope,Extrato Seco de Hedera Helix,Xarope,7mg/ml,5ml de 8 em 8 horas,Fitoterápico expectorante e broncodilatador.
-21,Carbocisteína Xarope Pediátrico,Carbocisteína,Xarope,20mg/ml,5ml de 8 em 8 horas,Expectorante para afecções agudas das vias aéreas.
-22,Clorfeniramina + Fenilefrina Gotas,Maleato de Clorfeniramina + Cloridrato de Fenilefrina,Gotas (Solução Oral),2mg/ml + 2.5mg/ml,20 gotas de 8 em 8 horas,Descongestionante e anti-histamínico para sintomas gripais.
-23,Fluconazol Suspensão,Fluconazol,Suspensão Oral,50mg/5ml,3mg a 6mg/kg dose única diária,Antifúngico para candidíase oral ou sistêmica.
-24,Sulfametoxazol + Trimetoprima Suspensão,Sulfametoxazol + Trimetoprima,Suspensão Oral,200mg + 40mg/5ml,10ml de 12 em 12 horas,Antibacteriano para infecções urinárias e respiratórias.
-25,Cefalexina Suspensão,Cefalexina,Suspensão Oral,250mg/5ml,250mg a 500mg de 6 em 6 horas,Antibiótico cefalosporínico para infecções bacterianas.
-26,Nitazoxanida Suspensão,Nitazoxanida,Suspensão Oral,20mg/ml,7.5mg/kg de 12 em 12 horas,Tomar com alimentos durante 3 dias consecutivos.
-27,Albendazol Suspensão,Albendazol,Suspensão Oral,40mg/ml,10ml em dose única,Antiparasitário para giardíase e verminoses.
-28,Mebendazol Suspensão,Mebendazol,Suspensão Oral,20mg/ml,5ml de 12 em 12 horas por 3 dias,Antiparasitário para enterobíase e ascaridíase.
-29,Domperidona Suspensão,Domperidona,Suspensão Oral,1mg/ml,0.25mg/kg de 8 em 8 horas,Tomar 15 a 30 minutos antes das refeições.
-30,Lactulose Xarope,Lactulose,Xarope (Solução Oral),667mg/ml,15ml a 30ml ao dia,Laxativo osmótico para tratamento da constipação intestinal.
-31,Hidróxido de Alumínio + Magnésio Suspensão,Hidróxido de Alumínio + Hidróxido de Magnésio,Suspensão Oral,37mg/ml + 40mg/ml,5ml a 10ml após as refeições,Antiácido para azia e hiperacidez gástrica.
-32,Miconazol Gel Oral,Nitrato de Miconazol,Gel Oral (Solução),20mg/g,2.5ml a 5ml 4 vezes ao dia,Manter na boca o maior tempo possível antes de engolir.
-33,Nistatina Suspensão,Nistatina,Suspensão Oral,100.000 UI/ml,1ml a 6ml de 6 em 6 horas,Bochechar e reter na boca antes de engolir para candidíase oral.
-34,Vitamina D3 Gotas,Colecalciferol,Gotas (Solução Oral),200 UI/gota,2 a 5 gotas ao dia,Suplementação preventiva ou terapêutica de Vitamina D.
-35,Sulfato Ferroso Gotas,Sulfato Ferroso,Gotas (Solução Oral),125mg/ml,1 a 2mg de ferro elementar por kg,Tomar preferencialmente em jejum ou acompanhado de suco cítrico.
-36,Aciclovir Suspensão,Aciclovir,Suspensão Oral,200mg/5ml,5ml 5 vezes ao dia,Antiviral para infecções por Herpes Simplex e Varicela-Zoster.
-37,Hidroxizine Xarope,Cloridrato de Hidroxizine,Xarope,2mg/ml,10ml a 25ml de 8 em 8 horas,Anti-histamínico e anxiolítico para dermatites e prurido.
-38,Dexclorfeniramina Xarope,Maleato de Dexclorfeniramina,Xarope,0.4mg/ml,5ml de 6 em 6 horas,Anti-histamínico para alergias e picadas de insetos.
-39,Prometazina Xarope,Cloridrato de Prometazina,Xarope,1mg/ml,10ml a 20ml de 8 em 8 horas,Anti-histamínico e sedativo leve.
-40,Risperidona Solução Oral,Risperidona,Solução Oral,1mg/ml,0.5mg a 2mg ao dia,Antipsicótico e estabilizador de humor.
-41,Haloperidol Gotas,Haloperidol,Gotas (Solução Oral),2mg/ml,5 a 20 gotas ao dia,Antipsicótico típico para controle de agitação e psicoses.
-42,Clonazepam Gotas,Clonazepam,Gotas (Solução Oral),2.5mg/ml,1 a 5 gotas ao dia,Ansiolítico e anticonvulsivante de tarja preta.
-43,Ácido Valpróico Xarope,Valproato de Sódio,Xarope,250mg/5ml,10mg a 15mg/kg ao dia,Anticonvulsivante e regulador de humor.
-44,Carbamazepina Suspensão,Carbamazepina,Suspensão Oral,20mg/ml,100mg a 200mg de 12 em 12 horas,Antiepiléptico e para dor neuropática.
-45,Levetiracetam Solução Oral,Levetiracetam,Solução Oral,100mg/ml,10mg a 30mg/kg de 12 em 12 horas,Antiepiléptico de nova geração para crises focais.
-46,Codeína Xarope,Fosfato de Codeína,Xarope,3mg/ml,5ml a 10ml de 6 em 6 horas,Analgésico opioide e antitussígeno sob retenção de receita.
-47,Tramadol Gotas,Cloridrato de Tramadol,Gotas (Solução Oral),100mg/ml,20 a 40 gotas de 6 em 6 horas,Analgésico opioide moderado.
-48,Cetoconazol Suspensão,Cetoconazol,Suspensão Oral,20mg/ml,5ml a 10ml uma vez ao dia,Antifúngico sistêmico.
-49,Eritromicina Suspensão,Estolato de Eritromicina,Suspensão Oral,250mg/5ml,250mg de 6 em 6 horas,Antibiótico macrolídeo.
-50,Amoxicilina + Clavulanato Suspensão,Amoxicilina + Clavulanato de Potássio,Suspensão Oral,250mg + 62.5mg/5ml,5ml de 8 em 8 horas,Antibacteriano de amplo espectro para infecções resistentes.
+2,Dipirona Solução Oral Pediátrica,Dipirona Sódica,Solução Oral,50mg/ml,0.5ml a 1ml por kg,Uso pediátrico de 6 em 6 horas se houver febre.
+3,Paracetamol Gotas,Paracetamol,Gotas (Solução Oral),200mg/ml,1 gota/kg por dose,Não ultrapassar 4 doses diárias.
+4,Paracetamol Xarope Bebê,Paracetamol,Xarope,100mg/ml,5ml de 6 em 6 horas,Uso infantil até 12kg.
+5,Paracetamol Solução Oral Adulto,Paracetamol,Solução Oral,140mg/ml,10ml de 6 em 6 horas,Indicado para alívio da dor e febre moderada.
+6,Ibuprofeno Gotas 100mg,Ibuprofeno,Gotas (Suspensão Oral),100mg/ml,1 gota/kg por dose,Tomar de 6 em 6 horas com alimentos.
+7,Ibuprofeno Gotas 50mg,Ibuprofeno,Gotas (Suspensão Oral),50mg/ml,2 gotas/kg por dose,Uso pediátrico para febre e processos inflamatórios.
+8,Ibuprofeno Suspensão Oral,Ibuprofeno,Suspensão Oral,20mg/ml,5ml a 10ml de 8 em 8 horas,Agitar bem antes de usar.
+9,Amoxicilina Suspensão 250mg,Amoxicilina,Suspensão Oral,250mg/5ml,5ml de 8 em 8 horas,Tomar por 7 a 10 dias. Agitar antes de usar.
+10,Amoxicilina Suspensão 500mg,Amoxicilina,Suspensão Oral,500mg/5ml,5ml de 12 em 12 horas,Uso sob prescrição médica por 7 dias.
+11,Amoxicilina + Clavulanato Pediátrico,Amoxicilina + Clavulanato de Potássio,Suspensão Oral,250mg + 62.5mg/5ml,5ml de 8 em 8 horas,Agitar bem e guardar na geladeira após reconstituído.
+12,Amoxicilina + Clavulanato Forte,Amoxicilina + Clavulanato de Potássio,Suspensão Oral,400mg + 57mg/5ml,5ml de 12 em 12 horas,Tratamento de infecções respiratórias.
+13,Prednisolona Solução Oral,Fosfato Sódico de Prednisolona,Solução Oral,3mg/ml,1mg/kg por dia,Tomar em dose única pela manhã durante 5 dias.
+14,Prednisolona Gotas,Fosfato Sódico de Prednisolona,Gotas,11mg/ml,5 a 10 gotas ao dia,Uso sob orientação médica estrita.
+15,Desloratadina Xarope,Desloratadina,Xarope,0.5mg/ml,5ml uma vez ao dia,Tomar preferencialmente à noite.
+16,Desloratadina Solução Oral,Desloratadina,Solução Oral,1mg/ml,2.5ml uma vez ao dia,Uso adulto e pediátrico acima de 2 anos.
+17,Loratadina Xarope,Loratadina,Xarope,1mg/ml,10ml uma vez ao dia,Anti-histamínico para alergias.
+18,Loratadina Solução Oral Pediátrica,Loratadina,Solução Oral,1mg/ml,5ml uma vez ao dia,Para crianças de 2 a 12 anos.
+19,Acebrofilina Xarope Pediátrico,Acebrofilina,Xarope,25mg/5ml,5ml de 12 em 12 horas,Broncodilator e mucolítico.
+20,Acebrofilina Xarope Adulto,Acebrofilina,Xarope,50mg/5ml,10ml de 12 em 12 horas,Para afecções respiratórias com secreção.
+21,Ambroxol Xarope Adulto,Cloridrato de Ambroxol,Xarope,30mg/5ml,5ml de 8 em 8 horas,Expectorante para tosse produtiva.
+22,Ambroxol Xarope Pediátrico,Cloridrato de Ambroxol,Xarope,15mg/5ml,2.5ml a 5ml de 8 em 8 horas,Uso infantil para facilitação da expectoração.
+23,Salbutamol Xarope,Sulfato de Salbutamol,Xarope,2mg/5ml,5ml a 10ml de 6 em 6 horas,Broncodilatador no tratamento da asma.
+24,Salbutamol Solução para Inalação/Oral,Sulfato de Salbutamol,Solução Oral/Inalatória,5mg/ml,10 a 20 gotas conforme prescrição,Uso oral ou para nebulização.
+25,Dramin B6 Gotas,Dimenidrinato + Cloridrato de Piridoxina,Gotas (Solução Oral),25mg/ml + 5mg/ml,1 gota/kg por dose,Tomar 30 minutos antes de viagens.
+26,Dramin Solução Oral,Dimenidrinato,Solução Oral,2.5mg/ml,10ml de 6 em 6 horas,Prevenção e controle de náuseas e vômitos.
+27,Simeticona Gotas 75mg,Simeticona,Gotas (Emulsão Oral),75mg/ml,20 a 30 gotas,Tomar de 8 em 8 horas para gases.
+28,Simeticona Gotas 30mg Pediátrico,Simeticona,Gotas (Emulsão Oral),30mg/ml,10 a 15 gotas,Alívio de cólicas e gases em lactentes.
+29,Nitazoxanida Suspensão 20mg,Nitazoxanida,Suspensão Oral,20mg/ml,7.5mg/kg de 12 em 12 horas,Tomar com alimentos durante 3 dias.
+30,Nitazoxanida Suspensão 100mg,Nitazoxanida,Suspensão Oral,100mg/5ml,5ml de 12 em 12 horas,Antiparasitário de amplo espectro.
+31,Azitromicina Suspensão 200mg,Azitromicina Monoidratada,Suspensão Oral,200mg/5ml,10mg/kg uma vez ao dia,Tomar por 3 a 5 dias.
+32,Azitromicina Suspensão 600mg,Azitromicina Monoidratada,Suspensão Oral,600mg/15ml,5ml uma vez ao dia,Dosagem concentrada para tratamentos curtos.
+33,Claritromicina Suspensão 125mg,Claritromicina,Suspensão Oral,125mg/5ml,7.5mg/kg de 12 em 12 horas,Tomar continuamente por 7 a 14 dias.
+34,Claritromicina Suspensão 250mg,Claritromicina,Suspensão Oral,250mg/5ml,5ml de 12 em 12 horas,Indicado para infecções respiratórias e de pele.
+35,Ondansetrona Solução Oral,Cloridrato de Ondansetrona,Solução Oral,4mg/5ml,5ml de 8 em 8 horas,Antihemético para náuseas severas.
+36,Ondansetrona Gotas,Cloridrato de Ondansetrona,Gotas,2mg/ml,1 gota/kg por dose,Prevenção de vômitos em gastroenterite Pediátrica.
+37,Metoclopramida Gotas,Cloridrato de Metoclopramida,Gotas (Solução Oral),4mg/ml,20 a 40 gotas,Tomar 30 minutos antes das refeições.
+38,Bromoprida Gotas,Bromoprida,Gotas (Solução Oral),4mg/ml,1 a 2 gotas por kg,Tomar de 8 em 8 horas para náuseas.
+39,Bromoprida Solução Oral,Bromoprida,Solução Oral,1mg/ml,10ml de 8 em 8 horas,Procinético e antiemético.
+40,Nimesulida Gotas,Nimesulida,Gotas (Suspensão Oral),50mg/ml,1 gota por kg,Tomar de 12 em 12 horas após refeições.
+41,Nimesulida Suspensão Oral,Nimesulida,Suspensão Oral,10mg/ml,5ml de 12 em 12 horas,Anti-inflamatório e analgésico.
+42,Dexametasona Elixir,Dexametasona,Elixir,0.1mg/ml,15ml ao dia fracionados,Corticosteróide para processos inflamatórios.
+43,Dexametasona Solução Oral Pediátrica,Dexametasona,Solução Oral,0.5mg/5ml,2.5ml de 12 em 12 horas,Uso infantil em laringites e inflamações.
+44,Lactulose Xarope Salada,Lactulose,Xarope (Solução Oral),667mg/ml,15ml a 30ml ao dia,Laxativo osmótico.
+45,Lactulose Solução Oral Ameixa,Lactulose,Solução Oral,667mg/ml,10ml de 12 em 12 horas,Regulador intestinal diário.
+46,Albendazol Suspensão 400mg,Albendazol,Suspensão Oral,40mg/ml,10ml em dose única,Antiparasitário dose única.
+47,Albendazol Suspensão Pediátrica,Albendazol,Suspensão Oral,20mg/ml,10ml uma vez ao dia por 3 dias,Para giardíase e verminoses complexas.
+48,Mebendazol Suspensão,Mebendazol,Suspensão Oral,20mg/ml,5ml de 12 em 12 horas por 3 dias,Tratamento de ascaridíase e enterobíase.
+49,Sulfato Ferroso Gotas,Sulfato Ferroso,Gotas (Solução Oral),125mg/ml,1 a 2mg/kg de ferro,Tomar preferencialmente em jejum.
+50,Sulfato Ferroso Xarope,Sulfato Ferroso,Xarope,25mg/5ml,10ml ao dia,Prevenção e tratamento de anemia ferropriva.
+51,Vitamina D3 Gotas 200 UI,Colecalciferol,Gotas (Solução Oral),200 UI/gota,2 a 5 gotas ao dia,Suplementação preventiva.
+52,Vitamina D3 Gotas 500 UI,Colecalciferol,Gotas (Solução Oral),500 UI/gota,1 a 2 gotas ao dia,Tratamento de deficiência grave de Vitamina D.
+53,Complexo B Xarope,Vitamina B1 + B2 + B6 + Nicotinamida,Xarope,5mg/5ml,5ml a 10ml ao dia,Suplemento vitamínico do complexo B.
+54,Risperidona Solução Oral 1mg,Risperidona,Solução Oral,1mg/ml,0.5mg a 2mg ao dia,Antipsicótico e estabilizador de humor.
+55,Risperidona Gotas,Risperidona,Gotas,1mg/ml,5 a 10 gotas ao dia,Tratamento de distúrbios comportamentais.
+56,Clonazepam Gotas,Clonazepam,Gotas (Solução Oral),2.5mg/ml,1 a 5 gotas ao dia,Ansiolítico e anticonvulsivante de tarja preta.
+57,Haloperidol Gotas,Haloperidol,Gotas (Solução Oral),2mg/ml,5 a 20 gotas ao dia,Antipsicótico para agitação psicomotora.
+58,Ácido Valpróico Xarope,Valproato de Sódio,Xarope,250mg/5ml,10 a 15mg/kg ao dia,Anticonvulsivante e regulador de humor.
+59,Carbamazepina Suspensão,Carbamazepina,Suspensão Oral,20mg/ml,100mg a 200mg de 12 em 12h,Tratamento de epilepsia e dor neuropática.
+60,Levetiracetam Solução Oral,Levetiracetam,Solução Oral,100mg/ml,10mg a 30mg/kg de 12 em 12h,Antiepiléptico de nova geração.
+61,Codeína Xarope,Fosfato de Codeína,Xarope,3mg/ml,5ml a 10ml de 6 em 6 horas,Analgésico opioide e antitussígeno sob retenção.
+62,Tramadol Gotas,Cloridrato de Tramadol,Gotas (Solução Oral),100mg/ml,20 a 40 gotas de 6 em 6 horas,Analgésico opioide moderado a forte.
+63,Hedera Helix Xarope,Extrato Seco de Hedera Helix,Xarope,7mg/ml,5ml de 8 em 8 horas,Fitoterápico expectorante.
+64,Carbocisteína Xarope Pediátrico,Carbocisteína,Xarope,20mg/ml,5ml de 8 em 8 horas,Mucolítico para vias aéreas.
+65,Carbocisteína Xarope Adulto,Carbocisteína,Xarope,50mg/ml,10ml de 8 em 8 horas,Expectorante para tosse carregada.
+66,Fluconazol Suspensão,Fluconazol,Suspensão Oral,50mg/5ml,3mg/kg dose única diária,Antifúngico para candidíase.
+67,Sulfametoxazol + Trimetoprima Suspensão,Sulfametoxazol + Trimetoprima,Suspensão Oral,200mg + 40mg/5ml,10ml de 12 em 12 horas,Antibacteriano para infecções urinárias e respiratórias.
+68,Cefalexina Suspensão 250mg,Cefalexina,Suspensão Oral,250mg/5ml,5ml de 6 em 6 horas,Antibiótico para infecções bacterianas.
+69,Cefalexina Suspensão 500mg,Cefalexina,Suspensão Oral,500mg/5ml,5ml de 12 em 12 horas,Antibiótico cefalosporínico.
+70,Domperidona Suspensão,Domperidona,Suspensão Oral,1mg/ml,0.25mg/kg de 8 em 8 horas,Tomar 15 a 30min antes das refeições.
+71,Hidróxido de Alumínio + Magnésio Suspensão,Hidróxido de Alumínio + Hidróxido de Magnésio,Suspensão Oral,37mg/ml + 40mg/ml,5ml a 10ml após refeições,Antiácido estomacal.
+72,Nistatina Suspensão,Nistatina,Suspensão Oral,100.000 UI/ml,1ml a 6ml de 6 em 6 horas,Bochechar e reter na boca antes de engolir.
+73,Aciclovir Suspensão,Aciclovir,Suspensão Oral,200mg/5ml,5ml 5 vezes ao dia,Antiviral para Herpes e Varicela.
+74,Hidroxizine Xarope,Cloridrato de Hidroxizine,Xarope,2mg/ml,10ml a 25ml de 8 em 8 horas,Anti-histamínico e anxiolítico.
+75,Dexclorfeniramina Xarope,Maleato de Dexclorfeniramina,Xarope,0.4mg/ml,5ml de 6 em 6 horas,Anti-histamínico para urticária e alergias.
+76,Prometazina Xarope,Cloridrato de Prometazina,Xarope,1mg/ml,10ml a 20ml de 8 em 8 horas,Anti-histamínico sedativo.
+77,Cetoconazol Suspensão,Cetoconazol,Suspensão Oral,20mg/ml,5ml a 10ml ao dia,Antifúngico sistêmico.
+78,Eritromicina Suspensão,Estolato de Eritromicina,Suspensão Oral,250mg/5ml,5ml de 6 em 6 horas,Antibiótico macrolídeo.
+79,Dipirona Gotas (Lote v2),Dipirona Sódica,Gotas (Solução Oral),500mg/ml,1 gota/kg por dose,Tomar via oral de 6 em 6 horas em caso de dor ou febre.
+80,Dipirona Solução Oral Pediátrica (Lote v2),Dipirona Sódica,Solução Oral,50mg/ml,0.5ml a 1ml por kg,Uso pediátrico de 6 em 6 horas se houver febre.
+81,Paracetamol Gotas (Lote v2),Paracetamol,Gotas (Solução Oral),200mg/ml,1 gota/kg por dose,Não ultrapassar 4 doses diárias.
+82,Paracetamol Xarope Bebê (Lote v2),Paracetamol,Xarope,100mg/ml,5ml de 6 em 6 horas,Uso infantil até 12kg.
+83,Paracetamol Solução Oral Adulto (Lote v2),Paracetamol,Solução Oral,140mg/ml,10ml de 6 em 6 horas,Indicado para alívio da dor e febre moderada.
+84,Ibuprofeno Gotas 100mg (Lote v2),Ibuprofeno,Gotas (Suspensão Oral),100mg/ml,1 gota/kg por dose,Tomar de 6 em 6 horas com alimentos.
+85,Ibuprofeno Gotas 50mg (Lote v2),Ibuprofeno,Gotas (Suspensão Oral),50mg/ml,2 gotas/kg por dose,Uso pediátrico para febre e processos inflamatórios.
+86,Ibuprofeno Suspensão Oral (Lote v2),Ibuprofeno,Suspensão Oral,20mg/ml,5ml a 10ml de 8 em 8 horas,Agitar bem antes de usar.
+87,Amoxicilina Suspensão 250mg (Lote v2),Amoxicilina,Suspensão Oral,250mg/5ml,5ml de 8 em 8 horas,Tomar por 7 a 10 dias. Agitar antes de usar.
+88,Amoxicilina Suspensão 500mg (Lote v2),Amoxicilina,Suspensão Oral,500mg/5ml,5ml de 12 em 12 horas,Uso sob prescrição médica por 7 dias.
+89,Amoxicilina + Clavulanato Pediátrico (Lote v2),Amoxicilina + Clavulanato de Potássio,Suspensão Oral,250mg + 62.5mg/5ml,5ml de 8 em 8 horas,Agitar bem e guardar na geladeira após reconstituído.
+90,Amoxicilina + Clavulanato Forte (Lote v2),Amoxicilina + Clavulanato de Potássio,Suspensão Oral,400mg + 57mg/5ml,5ml de 12 em 12 horas,Tratamento de infecções respiratórias.
+91,Prednisolona Solução Oral (Lote v2),Fosfato Sódico de Prednisolona,Solução Oral,3mg/ml,1mg/kg por dia,Tomar em dose única pela manhã durante 5 dias.
+92,Prednisolona Gotas (Lote v2),Fosfato Sódico de Prednisolona,Gotas,11mg/ml,5 a 10 gotas ao dia,Uso sob orientação médica estrita.
+93,Desloratadina Xarope (Lote v2),Desloratadina,Xarope,0.5mg/ml,5ml uma vez ao dia,Tomar preferencialmente à noite.
+94,Desloratadina Solução Oral (Lote v2),Desloratadina,Solução Oral,1mg/ml,2.5ml uma vez ao dia,Uso adulto e pediátrico acima de 2 anos.
+95,Loratadina Xarope (Lote v2),Loratadina,Xarope,1mg/ml,10ml uma vez ao dia,Anti-histamínico para alergias.
+96,Loratadina Solução Oral Pediátrica (Lote v2),Loratadina,Solução Oral,1mg/ml,5ml uma vez ao dia,Para crianças de 2 a 12 anos.
+97,Acebrofilina Xarope Pediátrico (Lote v2),Acebrofilina,Xarope,25mg/5ml,5ml de 12 em 12 horas,Broncodilator e mucolítico.
+98,Acebrofilina Xarope Adulto (Lote v2),Acebrofilina,Xarope,50mg/5ml,10ml de 12 em 12 horas,Para afecções respiratórias com secreção.
+99,Ambroxol Xarope Adulto (Lote v2),Cloridrato de Ambroxol,Xarope,30mg/5ml,5ml de 8 em 8 horas,Expectorante para tosse produtiva.
+100,Ambroxol Xarope Pediátrico (Lote v2),Cloridrato de Ambroxol,Xarope,15mg/5ml,2.5ml a 5ml de 8 em 8 horas,Uso infantil para facilitação da expectoração.
+101,Salbutamol Xarope (Lote v2),Sulfato de Salbutamol,Xarope,2mg/5ml,5ml a 10ml de 6 em 6 horas,Broncodilatador no tratamento da asma.
+102,Salbutamol Solução para Inalação/Oral (Lote v2),Sulfato de Salbutamol,Solução Oral/Inalatória,5mg/ml,10 a 20 gotas conforme prescrição,Uso oral ou para nebulização.
+103,Dramin B6 Gotas (Lote v2),Dimenidrinato + Cloridrato de Piridoxina,Gotas (Solução Oral),25mg/ml + 5mg/ml,1 gota/kg por dose,Tomar 30 minutos antes de viagens.
+104,Dramin Solução Oral (Lote v2),Dimenidrinato,Solução Oral,2.5mg/ml,10ml de 6 em 6 horas,Prevenção e controle de náuseas e vômitos.
+105,Simeticona Gotas 75mg (Lote v2),Simeticona,Gotas (Emulsão Oral),75mg/ml,20 a 30 gotas,Tomar de 8 em 8 horas para gases.
+106,Simeticona Gotas 30mg Pediátrico (Lote v2),Simeticona,Gotas (Emulsão Oral),30mg/ml,10 a 15 gotas,Alívio de cólicas e gases em lactentes.
+107,Nitazoxanida Suspensão 20mg (Lote v2),Nitazoxanida,Suspensão Oral,20mg/ml,7.5mg/kg de 12 em 12 horas,Tomar com alimentos durante 3 dias.
+108,Nitazoxanida Suspensão 100mg (Lote v2),Nitazoxanida,Suspensão Oral,100mg/5ml,5ml de 12 em 12 horas,Antiparasitário de amplo espectro.
+109,Azitromicina Suspensão 200mg (Lote v2),Azitromicina Monoidratada,Suspensão Oral,200mg/5ml,10mg/kg uma vez ao dia,Tomar por 3 a 5 dias.
+110,Azitromicina Suspensão 600mg (Lote v2),Azitromicina Monoidratada,Suspensão Oral,600mg/15ml,5ml uma vez ao dia,Dosagem concentrada para tratamentos curtos.
+111,Claritromicina Suspensão 125mg (Lote v2),Claritromicina,Suspensão Oral,125mg/5ml,7.5mg/kg de 12 em 12 horas,Tomar continuamente por 7 a 14 dias.
+112,Claritromicina Suspensão 250mg (Lote v2),Claritromicina,Suspensão Oral,250mg/5ml,5ml de 12 em 12 horas,Indicado para infecções respiratórias e de pele.
+113,Ondansetrona Solução Oral (Lote v2),Cloridrato de Ondansetrona,Solução Oral,4mg/5ml,5ml de 8 em 8 horas,Antihemético para náuseas severas.
+114,Ondansetrona Gotas (Lote v2),Cloridrato de Ondansetrona,Gotas,2mg/ml,1 gota/kg por dose,Prevenção de vômitos em gastroenterite Pediátrica.
+115,Metoclopramida Gotas (Lote v2),Cloridrato de Metoclopramida,Gotas (Solução Oral),4mg/ml,20 a 40 gotas,Tomar 30 minutos antes das refeições.
+116,Bromoprida Gotas (Lote v2),Bromoprida,Gotas (Solução Oral),4mg/ml,1 a 2 gotas por kg,Tomar de 8 em 8 horas para náuseas.
+117,Bromoprida Solução Oral (Lote v2),Bromoprida,Solução Oral,1mg/ml,10ml de 8 em 8 horas,Procinético e antiemético.
+118,Nimesulida Gotas (Lote v2),Nimesulida,Gotas (Suspensão Oral),50mg/ml,1 gota por kg,Tomar de 12 em 12 horas após refeições.
+119,Nimesulida Suspensão Oral (Lote v2),Nimesulida,Suspensão Oral,10mg/ml,5ml de 12 em 12 horas,Anti-inflamatório e analgésico.
+120,Dexametasona Elixir (Lote v2),Dexametasona,Elixir,0.1mg/ml,15ml ao dia fracionados,Corticosteróide para processos inflamatórios.
+121,Dexametasona Solução Oral Pediátrica (Lote v2),Dexametasona,Solução Oral,0.5mg/5ml,2.5ml de 12 em 12 horas,Uso infantil em laringites e inflamações.
+122,Lactulose Xarope Salada (Lote v2),Lactulose,Xarope (Solução Oral),667mg/ml,15ml a 30ml ao dia,Laxativo osmótico.
+123,Lactulose Solução Oral Ameixa (Lote v2),Lactulose,Solução Oral,667mg/ml,10ml de 12 em 12 horas,Regulador intestinal diário.
+124,Albendazol Suspensão 400mg (Lote v2),Albendazol,Suspensão Oral,40mg/ml,10ml em dose única,Antiparasitário dose única.
+125,Albendazol Suspensão Pediátrica (Lote v2),Albendazol,Suspensão Oral,20mg/ml,10ml uma vez ao dia por 3 dias,Para giardíase e verminoses complexas.
+126,Mebendazol Suspensão (Lote v2),Mebendazol,Suspensão Oral,20mg/ml,5ml de 12 em 12 horas por 3 dias,Tratamento de ascaridíase e enterobíase.
+127,Sulfato Ferroso Gotas (Lote v2),Sulfato Ferroso,Gotas (Solução Oral),125mg/ml,1 a 2mg/kg de ferro,Tomar preferencialmente em jejum.
+128,Sulfato Ferroso Xarope (Lote v2),Sulfato Ferroso,Xarope,25mg/5ml,10ml ao dia,Prevenção e tratamento de anemia ferropriva.
+129,Vitamina D3 Gotas 200 UI (Lote v2),Colecalciferol,Gotas (Solução Oral),200 UI/gota,2 a 5 gotas ao dia,Suplementação preventiva.
+130,Vitamina D3 Gotas 500 UI (Lote v2),Colecalciferol,Gotas (Solução Oral),500 UI/gota,1 a 2 gotas ao dia,Tratamento de deficiência grave de Vitamina D.
+131,Complexo B Xarope (Lote v2),Vitamina B1 + B2 + B6 + Nicotinamida,Xarope,5mg/5ml,5ml a 10ml ao dia,Suplemento vitamínico do complexo B.
+132,Risperidona Solução Oral 1mg (Lote v2),Risperidona,Solução Oral,1mg/ml,0.5mg a 2mg ao dia,Antipsicótico e estabilizador de humor.
+133,Risperidona Gotas (Lote v2),Risperidona,Gotas,1mg/ml,5 a 10 gotas ao dia,Tratamento de distúrbios comportamentais.
+134,Clonazepam Gotas (Lote v2),Clonazepam,Gotas (Solução Oral),2.5mg/ml,1 a 5 gotas ao dia,Ansiolítico e anticonvulsivante de tarja preta.
+135,Haloperidol Gotas (Lote v2),Haloperidol,Gotas (Solução Oral),2mg/ml,5 a 20 gotas ao dia,Antipsicótico para agitação psicomotora.
+136,Ácido Valpróico Xarope (Lote v2),Valproato de Sódio,Xarope,250mg/5ml,10 a 15mg/kg ao dia,Anticonvulsivante e regulador de humor.
+137,Carbamazepina Suspensão (Lote v2),Carbamazepina,Suspensão Oral,20mg/ml,100mg a 200mg de 12 em 12h,Tratamento de epilepsia e dor neuropática.
+138,Levetiracetam Solução Oral (Lote v2),Levetiracetam,Solução Oral,100mg/ml,10mg a 30mg/kg de 12 em 12h,Antiepiléptico de nova geração.
+139,Codeína Xarope (Lote v2),Fosfato de Codeína,Xarope,3mg/ml,5ml a 10ml de 6 em 6 horas,Analgésico opioide e antitussígeno sob retenção.
+140,Tramadol Gotas (Lote v2),Cloridrato de Tramadol,Gotas (Solução Oral),100mg/ml,20 a 40 gotas de 6 em 6 horas,Analgésico opioide moderado a forte.
+141,Hedera Helix Xarope (Lote v2),Extrato Seco de Hedera Helix,Xarope,7mg/ml,5ml de 8 em 8 horas,Fitoterápico expectorante.
+142,Carbocisteína Xarope Pediátrico (Lote v2),Carbocisteína,Xarope,20mg/ml,5ml de 8 em 8 horas,Mucolítico para vias aéreas.
+143,Carbocisteína Xarope Adulto (Lote v2),Carbocisteína,Xarope,50mg/ml,10ml de 8 em 8 horas,Expectorante para tosse carregada.
+144,Fluconazol Suspensão (Lote v2),Fluconazol,Suspensão Oral,50mg/5ml,3mg/kg dose única diária,Antifúngico para candidíase.
+145,Sulfametoxazol + Trimetoprima Suspensão (Lote v2),Sulfametoxazol + Trimetoprima,Suspensão Oral,200mg + 40mg/5ml,10ml de 12 em 12 horas,Antibacteriano para infecções urinárias e respiratórias.
+146,Cefalexina Suspensão 250mg (Lote v2),Cefalexina,Suspensão Oral,250mg/5ml,5ml de 6 em 6 horas,Antibiótico para infecções bacterianas.
+147,Cefalexina Suspensão 500mg (Lote v2),Cefalexina,Suspensão Oral,500mg/5ml,5ml de 12 em 12 horas,Antibiótico cefalosporínico.
+148,Domperidona Suspensão (Lote v2),Domperidona,Suspensão Oral,1mg/ml,0.25mg/kg de 8 em 8 horas,Tomar 15 a 30min antes das refeições.
+149,Hidróxido de Alumínio + Magnésio Suspensão (Lote v2),Hidróxido de Alumínio + Hidróxido de Magnésio,Suspensão Oral,37mg/ml + 40mg/ml,5ml a 10ml após refeições,Antiácido estomacal.
+150,Nistatina Suspensão (Lote v2),Nistatina,Suspensão Oral,100.000 UI/ml,1ml a 6ml de 6 em 6 horas,Bochechar e reter na boca antes de engolir.
+151,Aciclovir Suspensão (Lote v2),Aciclovir,Suspensão Oral,200mg/5ml,5ml 5 vezes ao dia,Antiviral para Herpes e Varicela.
+152,Hidroxizine Xarope (Lote v2),Cloridrato de Hidroxizine,Xarope,2mg/ml,10ml a 25ml de 8 em 8 horas,Anti-histamínico e anxiolítico.
+153,Dexclorfeniramina Xarope (Lote v2),Maleato de Dexclorfeniramina,Xarope,0.4mg/ml,5ml de 6 em 6 horas,Anti-histamínico para urticária e alergias.
+154,Prometazina Xarope (Lote v2),Cloridrato de Prometazina,Xarope,1mg/ml,10ml a 20ml de 8 em 8 horas,Anti-histamínico sedativo.
+155,Cetoconazol Suspensão (Lote v2),Cetoconazol,Suspensão Oral,20mg/ml,5ml a 10ml ao dia,Antifúngico sistêmico.
+156,Eritromicina Suspensão (Lote v2),Estolato de Eritromicina,Suspensão Oral,250mg/5ml,5ml de 6 em 6 horas,Antibiótico macrolídeo.
+157,Dipirona Gotas (Lote v3),Dipirona Sódica,Gotas (Solução Oral),500mg/ml,1 gota/kg por dose,Tomar via oral de 6 em 6 horas em caso de dor ou febre.
+158,Dipirona Solução Oral Pediátrica (Lote v3),Dipirona Sódica,Solução Oral,50mg/ml,0.5ml a 1ml por kg,Uso pediátrico de 6 em 6 horas se houver febre.
+159,Paracetamol Gotas (Lote v3),Paracetamol,Gotas (Solução Oral),200mg/ml,1 gota/kg por dose,Não ultrapassar 4 doses diárias.
+160,Paracetamol Xarope Bebê (Lote v3),Paracetamol,Xarope,100mg/ml,5ml de 6 em 6 horas,Uso infantil até 12kg.
+161,Paracetamol Solução Oral Adulto (Lote v3),Paracetamol,Solução Oral,140mg/ml,10ml de 6 em 6 horas,Indicado para alívio da dor e febre moderada.
+162,Ibuprofeno Gotas 100mg (Lote v3),Ibuprofeno,Gotas (Suspensão Oral),100mg/ml,1 gota/kg por dose,Tomar de 6 em 6 horas com alimentos.
+163,Ibuprofeno Gotas 50mg (Lote v3),Ibuprofeno,Gotas (Suspensão Oral),50mg/ml,2 gotas/kg por dose,Uso pediátrico para febre e processos inflamatórios.
+164,Ibuprofeno Suspensão Oral (Lote v3),Ibuprofeno,Suspensão Oral,20mg/ml,5ml a 10ml de 8 em 8 horas,Agitar bem antes de usar.
+165,Amoxicilina Suspensão 250mg (Lote v3),Amoxicilina,Suspensão Oral,250mg/5ml,5ml de 8 em 8 horas,Tomar por 7 a 10 dias. Agitar antes de usar.
+166,Amoxicilina Suspensão 500mg (Lote v3),Amoxicilina,Suspensão Oral,500mg/5ml,5ml de 12 em 12 horas,Uso sob prescrição médica por 7 dias.
+167,Amoxicilina + Clavulanato Pediátrico (Lote v3),Amoxicilina + Clavulanato de Potássio,Suspensão Oral,250mg + 62.5mg/5ml,5ml de 8 em 8 horas,Agitar bem e guardar na geladeira após reconstituído.
+168,Amoxicilina + Clavulanato Forte (Lote v3),Amoxicilina + Clavulanato de Potássio,Suspensão Oral,400mg + 57mg/5ml,5ml de 12 em 12 horas,Tratamento de infecções respiratórias.
+169,Prednisolona Solução Oral (Lote v3),Fosfato Sódico de Prednisolona,Solução Oral,3mg/ml,1mg/kg por dia,Tomar em dose única pela manhã durante 5 dias.
+170,Prednisolona Gotas (Lote v3),Fosfato Sódico de Prednisolona,Gotas,11mg/ml,5 a 10 gotas ao dia,Uso sob orientação médica estrita.
+171,Desloratadina Xarope (Lote v3),Desloratadina,Xarope,0.5mg/ml,5ml uma vez ao dia,Tomar preferencialmente à noite.
+172,Desloratadina Solução Oral (Lote v3),Desloratadina,Solução Oral,1mg/ml,2.5ml uma vez ao dia,Uso adulto e pediátrico acima de 2 anos.
+173,Loratadina Xarope (Lote v3),Loratadina,Xarope,1mg/ml,10ml uma vez ao dia,Anti-histamínico para alergias.
+174,Loratadina Solução Oral Pediátrica (Lote v3),Loratadina,Solução Oral,1mg/ml,5ml uma vez ao dia,Para crianças de 2 a 12 anos.
+175,Acebrofilina Xarope Pediátrico (Lote v3),Acebrofilina,Xarope,25mg/5ml,5ml de 12 em 12 horas,Broncodilator e mucolítico.
+176,Acebrofilina Xarope Adulto (Lote v3),Acebrofilina,Xarope,50mg/5ml,10ml de 12 em 12 horas,Para afecções respiratórias com secreção.
+177,Ambroxol Xarope Adulto (Lote v3),Cloridrato de Ambroxol,Xarope,30mg/5ml,5ml de 8 em 8 horas,Expectorante para tosse produtiva.
+178,Ambroxol Xarope Pediátrico (Lote v3),Cloridrato de Ambroxol,Xarope,15mg/5ml,2.5ml a 5ml de 8 em 8 horas,Uso infantil para facilitação da expectoração.
+179,Salbutamol Xarope (Lote v3),Sulfato de Salbutamol,Xarope,2mg/5ml,5ml a 10ml de 6 em 6 horas,Broncodilatador no tratamento da asma.
+180,Salbutamol Solução para Inalação/Oral (Lote v3),Sulfato de Salbutamol,Solução Oral/Inalatória,5mg/ml,10 a 20 gotas conforme prescrição,Uso oral ou para nebulização.
+181,Dramin B6 Gotas (Lote v3),Dimenidrinato + Cloridrato de Piridoxina,Gotas (Solução Oral),25mg/ml + 5mg/ml,1 gota/kg por dose,Tomar 30 minutos antes de viagens.
+182,Dramin Solução Oral (Lote v3),Dimenidrinato,Solução Oral,2.5mg/ml,10ml de 6 em 6 horas,Prevenção e controle de náuseas e vômitos.
+183,Simeticona Gotas 75mg (Lote v3),Simeticona,Gotas (Emulsão Oral),75mg/ml,20 a 30 gotas,Tomar de 8 em 8 horas para gases.
+184,Simeticona Gotas 30mg Pediátrico (Lote v3),Simeticona,Gotas (Emulsão Oral),30mg/ml,10 a 15 gotas,Alívio de cólicas e gases em lactentes.
+185,Nitazoxanida Suspensão 20mg (Lote v3),Nitazoxanida,Suspensão Oral,20mg/ml,7.5mg/kg de 12 em 12 horas,Tomar com alimentos durante 3 dias.
+186,Nitazoxanida Suspensão 100mg (Lote v3),Nitazoxanida,Suspensão Oral,100mg/5ml,5ml de 12 em 12 horas,Antiparasitário de amplo espectro.
+187,Azitromicina Suspensão 200mg (Lote v3),Azitromicina Monoidratada,Suspensão Oral,200mg/5ml,10mg/kg uma vez ao dia,Tomar por 3 a 5 dias.
+188,Azitromicina Suspensão 600mg (Lote v3),Azitromicina Monoidratada,Suspensão Oral,600mg/15ml,5ml uma vez ao dia,Dosagem concentrada para tratamentos curtos.
+189,Claritromicina Suspensão 125mg (Lote v3),Claritromicina,Suspensão Oral,125mg/5ml,7.5mg/kg de 12 em 12 horas,Tomar continuamente por 7 a 14 dias.
+190,Claritromicina Suspensão 250mg (Lote v3),Claritromicina,Suspensão Oral,250mg/5ml,5ml de 12 em 12 horas,Indicado para infecções respiratórias e de pele.
+191,Ondansetrona Solução Oral (Lote v3),Cloridrato de Ondansetrona,Solução Oral,4mg/5ml,5ml de 8 em 8 horas,Antihemético para náuseas severas.
+192,Ondansetrona Gotas (Lote v3),Cloridrato de Ondansetrona,Gotas,2mg/ml,1 gota/kg por dose,Prevenção de vômitos em gastroenterite Pediátrica.
+193,Metoclopramida Gotas (Lote v3),Cloridrato de Metoclopramida,Gotas (Solução Oral),4mg/ml,20 a 40 gotas,Tomar 30 minutos antes das refeições.
+194,Bromoprida Gotas (Lote v3),Bromoprida,Gotas (Solução Oral),4mg/ml,1 a 2 gotas por kg,Tomar de 8 em 8 horas para náuseas.
+195,Bromoprida Solução Oral (Lote v3),Bromoprida,Solução Oral,1mg/ml,10ml de 8 em 8 horas,Procinético e antiemético.
+196,Nimesulida Gotas (Lote v3),Nimesulida,Gotas (Suspensão Oral),50mg/ml,1 gota por kg,Tomar de 12 em 12 horas após refeições.
+197,Nimesulida Suspensão Oral (Lote v3),Nimesulida,Suspensão Oral,10mg/ml,5ml de 12 em 12 horas,Anti-inflamatório e analgésico.
+198,Dexametasona Elixir (Lote v3),Dexametasona,Elixir,0.1mg/ml,15ml ao dia fracionados,Corticosteróide para processos inflamatórios.
+199,Dexametasona Solução Oral Pediátrica (Lote v3),Dexametasona,Solução Oral,0.5mg/5ml,2.5ml de 12 em 12 horas,Uso infantil em laringites e inflamações.
+200,Lactulose Xarope Salada (Lote v3),Lactulose,Xarope (Solução Oral),667mg/ml,15ml a 30ml ao dia,Laxativo osmótico.
