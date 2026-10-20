@@ -13,7 +13,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(
-    title="API de Busca de Prescrições Líquidas",
+    title="DozzaHealth API de Busca de Prescrições Líquidas",
     description="Serviço de busca de alta performance para prescrições de medicamentos líquidos.",
     version="1.0.0",
     lifespan=lifespan
