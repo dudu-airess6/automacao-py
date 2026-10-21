@@ -37,13 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     mensagemFeedback.style.color = '#77dd77';
                     mensagemFeedback.textContent = dados.mensagem || 'Login realizado com sucesso! Redirecionando...';
 
-                    // Redireciona para a busca se for Farmacêutico
                     setTimeout(() => {
                         if (dados.tipo_usuario === 'Farmaceutico') {
                             window.location.href = 'busca.html';
                         } else {
                             mensagemFeedback.style.color = '#ef4444';
-                            mensagemFeedback.textContent = 'Apenas farmacêuticos têm permissão de acesso à busca.';
+                            mensagemFeedback.textContent = 'Apenas farmacêuticos têm permissão de acesso.';
                         }
                     }, 1000);
 
@@ -125,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     const formBusca = document.getElementById('formBusca');
     if (formBusca) {
-        // Validação de Sessão/Token
         const token = localStorage.getItem('token');
         const tipoUsuario = localStorage.getItem('tipo_usuario');
         const nomeUsuario = localStorage.getItem('nome_usuario');
@@ -153,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnLogout = document.getElementById('btnLogout');
 
         let paginaAtual = 1;
-        const limitePorPagina = 9;
+        const limitePorPagina = 12;
+        let totalRegistrosAtual = 0;
 
         if (btnLogout) {
             btnLogout.addEventListener('click', () => {
@@ -229,28 +228,49 @@ document.addEventListener('DOMContentLoaded', () => {
         function renderizarResultados(dados) {
             const { total_encontrados, resultados, pagina, limite } = dados;
 
+            // Busca os itens já fracionados no localStorage
+            const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
+            const idsFracionados = historicoFracionados.map(item => String(item.id));
+
+            // Filtra os resultados vindos da API excluindo os já fracionados
+            const resultadosFiltrados = (resultados || []).filter(med => !idsFracionados.includes(String(med.id)));
+
+            // Calcula o total real do estoque descontando a quantidade de fracionados
+            totalRegistrosAtual = Math.max(0, (total_encontrados || 0) - historicoFracionados.length);
+
             if (infoTotal) {
-                infoTotal.textContent = `Total de registros encontrados: ${total_encontrados}`;
+                infoTotal.textContent = `Total de registros em estoque: ${totalRegistrosAtual}`;
             }
 
             gridResultados.innerHTML = '';
 
-            if (!resultados || resultados.length === 0) {
+            if (resultadosFiltrados.length === 0) {
                 gridResultados.innerHTML = '<p>Nenhum medicamento encontrado para os filtros selecionados.</p>';
                 if (paginacao) paginacao.classList.add('hidden');
                 return;
             }
 
-            resultados.forEach(med => {
+            resultadosFiltrados.forEach(med => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
-                    <h3>${med.nome_comercial || med.nome || 'N/A'}</h3>
-                    <p><strong>Princípio Ativo:</strong> ${med.principio_ativo || 'N/A'}</p>
-                    <p><strong>Concentração:</strong> ${med.concentracao || 'N/A'}</p>
-                    <p><strong>Instruções:</strong> ${med.instrucoes_prescricao || 'N/A'}</p>
-                    <span class="tag-forma">${med.forma_farmaceutica || 'Líquido'}</span>
+                    <div>
+                        <h3>${med.nome_comercial || med.nome || 'N/A'}</h3>
+                        <p><strong>Princípio Ativo:</strong> ${med.principio_ativo || 'N/A'}</p>
+                        <p><strong>Concentração:</strong> ${med.concentracao || 'N/A'}</p>
+                        <p><strong>Instruções:</strong> ${med.instrucoes_prescricao || 'N/A'}</p>
+                        <span class="tag-forma">${med.forma_farmaceutica || 'Líquido'}</span>
+                    </div>
+                    <button class="btn-fracionar">
+                        ⚙️ Fracionar Medicamento
+                    </button>
                 `;
+
+                const btnFracionar = card.querySelector('.btn-fracionar');
+                btnFracionar.addEventListener('click', () => {
+                    fracionarMedicamentoLocal(med, card);
+                });
+
                 gridResultados.appendChild(card);
             });
 
@@ -262,7 +282,151 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Executa uma busca inicial assim que a página abre
+        function fracionarMedicamentoLocal(med, cardElement) {
+            const nomeMed = med.nome_comercial || med.nome || 'Medicamento';
+            const confirmacao = confirm(`Deseja fracionar o medicamento "${nomeMed}"?\nEle será removido do estoque visual e salvo na tela de Fracionados.`);
+            
+            if (!confirmacao) return;
+
+            const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
+
+            const novoRegistro = {
+                id: String(med.id || Date.now()),
+                nome_medicamento: nomeMed,
+                principio_ativo: med.principio_ativo || 'N/A',
+                data_hora: new Date().toLocaleString('pt-BR'),
+                responsavel: localStorage.getItem('nome_usuario') || 'Usuário'
+            };
+
+            historicoFracionados.push(novoRegistro);
+            localStorage.setItem('medicamentos_fracionados', JSON.stringify(historicoFracionados));
+
+            cardElement.style.transition = 'all 0.4s ease';
+            cardElement.style.opacity = '0';
+            cardElement.style.transform = 'scale(0.8)';
+
+            setTimeout(() => {
+                cardElement.remove();
+
+                if (totalRegistrosAtual > 0) {
+                    totalRegistrosAtual--;
+                    if (infoTotal) {
+                        infoTotal.textContent = `Total de registros em estoque: ${totalRegistrosAtual}`;
+                    }
+                }
+
+                if (gridResultados.children.length === 0) {
+                    gridResultados.innerHTML = '<p>Nenhum medicamento restante nesta página.</p>';
+                }
+
+            }, 400);
+
+            alert(`Medicamento "${nomeMed}" movido para a tela de Fracionados com sucesso!`);
+        }
+
         executarBusca();
+    }
+
+    // ============================================================
+    // 4. TELA DE MEDICAMENTOS FRACIONADOS (fracionados.html)
+    // ============================================================
+    const tabelaFracionadosBody = document.getElementById('tabelaFracionadosBody');
+    if (tabelaFracionadosBody) {
+        const nomeUsuario = localStorage.getItem('nome_usuario');
+
+        const labelUsuario = document.getElementById('labelUsuario');
+        if (labelUsuario) {
+            labelUsuario.textContent = `Farm. ${nomeUsuario || 'Usuário'}`;
+        }
+
+        const btnLogout = document.getElementById('btnLogout');
+        if (btnLogout) {
+            btnLogout.addEventListener('click', () => {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            });
+        }
+
+        function carregarFracionadosLocais() {
+            const dados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
+            tabelaFracionadosBody.innerHTML = '';
+
+            if (!dados || dados.length === 0) {
+                tabelaFracionadosBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="padding: 20px; text-align: center; color: #888;">
+                            Nenhum medicamento fracionado registrado até o momento.
+                        </td>
+                    </tr>`;
+                return;
+            }
+
+            dados.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #e5e7eb';
+                tr.innerHTML = `
+                    <td style="padding: 14px 16px; font-weight: 600; color: #4a4a4a;">${item.nome_medicamento || 'N/A'}</td>
+                    <td style="padding: 14px 16px; color: #6b7280;">${item.principio_ativo || 'N/A'}</td>
+                    <td style="padding: 14px 16px; color: #6b7280;">${item.data_hora}</td>
+                    <td style="padding: 14px 16px; color: #4a4a4a; font-weight: 500;">Farm. ${item.responsavel}</td>
+                    <td style="padding: 14px 16px; text-align: center;">
+                        <button class="btn-primary btn-relatorio-single" style="padding: 6px 12px; font-size: 12px;">
+                            📋 Ver Relatório
+                        </button>
+                    </td>
+                `;
+
+                const btnRelatorio = tr.querySelector('.btn-relatorio-single');
+                btnRelatorio.addEventListener('click', () => {
+                    gerarRelatorioIndividual(item);
+                });
+
+                tabelaFracionadosBody.appendChild(tr);
+            });
+        }
+
+        function gerarRelatorioIndividual(item) {
+            const janelaImpressao = window.open('', '_blank');
+
+            janelaImpressao.document.write(`
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Relatório de Fracionamento - ${item.nome_medicamento}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 40px; color: #333; line-height: 1.6; }
+                        .header { border-bottom: 2px solid #278527; padding-bottom: 10px; margin-bottom: 20px; }
+                        .header h1 { color: #278527; margin: 0; font-size: 22px; }
+                        .box { background: #f9fafb; padding: 20px; border-radius: 8px; border: 1px solid #e5e7eb; margin-top: 20px; }
+                        .box p { margin: 8px 0; }
+                        .btn-print { margin-top: 25px; padding: 10px 20px; background-color: #278527; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+                        @media print { .btn-print { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>PharmaFrac — Relatório de Fracionamento</h1>
+                    </div>
+                    <div class="box">
+                        <p><strong>Medicamento:</strong> ${item.nome_medicamento}</p>
+                        <p><strong>Princípio Ativo:</strong> ${item.principio_ativo}</p>
+                        <p><strong>Data e Hora do Processo:</strong> ${item.data_hora}</p>
+                        <p><strong>Responsável Operacional:</strong> Farm. ${item.responsavel}</p>
+                        <p><strong>Status do Registro:</strong> Fracionado / Liberado para Dispensação</p>
+                    </div>
+                    <button class="btn-print" onclick="window.print()">🖨️ Imprimir Relatório</button>
+                </body>
+                </html>
+            `);
+            janelaImpressao.document.close();
+        }
+
+        const btnImprimirGeral = document.getElementById('btnImprimirRelatorioGeral');
+        if (btnImprimirGeral) {
+            btnImprimirGeral.addEventListener('click', () => window.print());
+        }
+
+        carregarFracionadosLocais();
     }
 });
