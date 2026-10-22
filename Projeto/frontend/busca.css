@@ -522,3 +522,178 @@ body {
     font-weight: bold;
     padding: 0 4px;
 }
+/* ============================================================
+   TOAST NOTIFICATIONS (Alertas Flutuantes)
+   ============================================================ */
+#toastContainer {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast {
+    min-width: 300px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+}
+
+.toast.sucesso { background-color: #10b981; }
+.toast.erro { background-color: #ef4444; }
+.toast.info { background-color: #3b82f6; }
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateY(10px); }
+}
+
+/* ============================================================
+   MODAL DE CONFIRMAÇÃO CUSTOMIZADO
+   ============================================================ */
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9998;
+    opacity: 0;
+    animation: fadeInModal 0.2s ease forwards;
+}
+
+.custom-modal-box {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 12px;
+    max-width: 440px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.custom-modal-box h3 {
+    margin: 0 0 10px 0;
+    color: #1f2937;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.custom-modal-box p {
+    color: #4b5563;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    white-space: pre-line;
+}
+
+.custom-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+@keyframes fadeInModal {
+    to { opacity: 1; }
+}
+/* ============================================================
+   FILTRO DE TIPO DE MEDICAMENTO (Chips / Pílulas)
+   ============================================================ */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip-btn {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    outline: none;
+}
+
+.chip-btn:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transform: translateY(-1px);
+}
+
+.chip-btn.active {
+    background-color: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+    box-shadow: 0 2px 6px rgba(39, 133, 39, 0.12);
+}
+/* Formulário de Busca */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Linha do Campo de Entrada e Botão */
+.search-input-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.search-input-group input[type="text"] {
+    flex: 1; /* Ocupa todo o espaço restante */
+    background-color: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.search-input-group input[type="text"]:focus {
+    background-color: #ffffff;
+    border-color: #278527;
+    box-shadow: 0 0 0 3px rgba(39, 133, 39, 0.15);
+}

@@ -2,6 +2,58 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_BASE = 'http://127.0.0.1:8001';
 
     // ============================================================
+    // UTILITÁRIOS DE INTERFACE (Toast e Modal Customizado)
+    // ============================================================
+    function mostrarToast(mensagem, tipo = 'sucesso') {
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${tipo}`;
+        toast.innerHTML = `<span>${mensagem}</span>`;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    function confirmarAcao(titulo, mensagem) {
+        return new Promise((resolve) => {
+            const overlay = document.createElement('div');
+            overlay.className = 'custom-modal-overlay';
+            overlay.innerHTML = `
+                <div class="custom-modal-box">
+                    <h3>${titulo}</h3>
+                    <p>${mensagem}</p>
+                    <div class="custom-modal-actions">
+                        <button class="btn-secondary" id="btnModalCancelar" style="padding: 8px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer;">Cancelar</button>
+                        <button class="btn-primary" id="btnModalConfirmar" style="padding: 8px 16px; border-radius: 6px; border: none; background: #10b981; color: white; font-weight: bold; cursor: pointer;">Confirmar</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            const btnConfirmar = overlay.querySelector('#btnModalConfirmar');
+            const btnCancelar = overlay.querySelector('#btnModalCancelar');
+
+            btnConfirmar.addEventListener('click', () => {
+                overlay.remove();
+                resolve(true);
+            });
+
+            btnCancelar.addEventListener('click', () => {
+                overlay.remove();
+                resolve(false);
+            });
+        });
+    }
+
+    // ============================================================
     // 0. NAVEGAÇÃO / NAVBAR (Ativação Automática de Abas)
     // ============================================================
     const linkAtual = window.location.pathname.split('/').pop();
@@ -34,10 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resposta = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        usuario: credencial,
-                        senha: senha
-                    })
+                    body: JSON.stringify({ usuario: credencial, senha: senha })
                 });
 
                 const dados = await resposta.json();
@@ -101,13 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resposta = await fetch(`${API_BASE}/auth/cadastro`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        nome,
-                        login,
-                        senha,
-                        tipo_usuario,
-                        crf
-                    })
+                    body: JSON.stringify({ nome, login, senha, tipo_usuario, crf })
                 });
 
                 const dados = await resposta.json();
@@ -144,9 +187,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const nomeUsuario = localStorage.getItem('nome_usuario');
 
         if (!token || tipoUsuario !== 'Farmaceutico') {
-            alert('Acesso negado. Faça login como Farmacêutico.');
+            mostrarToast('Acesso negado. Faça login como Farmacêutico.', 'erro');
             localStorage.clear();
-            window.location.href = 'index.html';
+            setTimeout(() => { window.location.href = 'index.html'; }, 1500);
             return;
         }
 
@@ -202,9 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (resposta.status === 401 || resposta.status === 403) {
-                    alert('Sessão expirada ou não autorizada. Faça login novamente.');
+                    mostrarToast('Sessão expirada. Faça login novamente.', 'erro');
                     localStorage.clear();
-                    window.location.href = 'index.html';
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1500);
                     return;
                 }
 
@@ -224,13 +267,19 @@ document.addEventListener('DOMContentLoaded', () => {
         function renderizarResultados(dados) {
             const { total_encontrados, resultados } = dados;
 
-            // 1. Oculta medicamentos fracionados
+            // 1. Filtro seguro contra IDs indefinidos/nulos
             const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
-            const idsFracionados = historicoFracionados.map(item => String(item.id));
-            const resultadosFiltrados = (resultados || []).filter(med => !idsFracionados.includes(String(med.id)));
+            const idsFracionados = historicoFracionados
+                .map(item => (item && item.id !== undefined && item.id !== null) ? String(item.id) : null)
+                .filter(Boolean);
+
+            const resultadosFiltrados = (resultados || []).filter(med => {
+                const medId = med.id || med.id_medicamento;
+                return medId !== undefined && medId !== null ? !idsFracionados.includes(String(medId)) : true;
+            });
 
             // 2. Atualiza contagem total em estoque
-            totalRegistrosAtual = Math.max(0, (total_encontrados || 0) - historicoFracionados.length);
+            totalRegistrosAtual = Math.max(0, (total_encontrados || 0) - idsFracionados.length);
 
             if (infoTotal) {
                 infoTotal.textContent = `Total de registros em estoque: ${totalRegistrosAtual}`;
@@ -244,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 3. Renderiza os Cards de Medicamentos
+            // 3. Renderiza os Cards
             resultadosFiltrados.forEach(med => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -269,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gridResultados.appendChild(card);
             });
 
-            // 4. Renderiza Paginação Numérica com Reticências
+            // 4. Paginação Numérica
             const totalPaginas = Math.ceil(totalRegistrosAtual / limitePorPagina);
             if (paginacao) {
                 renderizarControlesPaginacao(totalPaginas, paginaAtual, paginacao, (novaPagina) => {
@@ -279,7 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Lógica para montar os botões numéricos [1] [2] [3] [4] [...] [Última]
         function renderizarControlesPaginacao(totalPaginas, paginaAtual, container, aoMudarPagina) {
             container.innerHTML = '';
 
@@ -289,7 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             container.classList.remove('hidden');
 
-            // Botão Anterior
             const btnAnterior = document.createElement('button');
             btnAnterior.textContent = '« Anterior';
             btnAnterior.disabled = (paginaAtual === 1);
@@ -345,7 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Botão Próxima
             const btnProxima = document.createElement('button');
             btnProxima.textContent = 'Próxima »';
             btnProxima.disabled = (paginaAtual === totalPaginas);
@@ -353,17 +399,22 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(btnProxima);
         }
 
-        // Lógica de Fracionamento 100% Frontend
-        function fracionarMedicamentoLocal(med, cardElement) {
+        // Lógica Async de Fracionamento com Modal Customizado e Toast
+        async function fracionarMedicamentoLocal(med, cardElement) {
             const nomeMed = med.nome_comercial || med.nome || 'Medicamento';
-            const confirmacao = confirm(`Deseja fracionar o medicamento "${nomeMed}"?\nEle será removido do estoque visual e salvo na tela de Fracionados.`);
-            
-            if (!confirmacao) return;
+            const medId = med.id || med.id_medicamento || Date.now();
+
+            const confirmou = await confirmarAcao(
+                '⚙️ Confirmar Fracionamento',
+                `Deseja fracionar o medicamento "${nomeMed}"?\n\nEle será removido do estoque visual e registrado no histórico de Fracionados.`
+            );
+
+            if (!confirmou) return;
 
             const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
 
             const novoRegistro = {
-                id: String(med.id || Date.now()),
+                id: String(medId),
                 nome_medicamento: nomeMed,
                 principio_ativo: med.principio_ativo || 'N/A',
                 data_hora: new Date().toLocaleString('pt-BR'),
@@ -393,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             }, 400);
 
-            alert(`Medicamento "${nomeMed}" movido para a tela de Fracionados com sucesso!`);
+            mostrarToast(`Medicamento "${nomeMed}" movido para Fracionados com sucesso!`, 'sucesso');
         }
 
         executarBusca();

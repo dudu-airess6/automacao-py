@@ -26,21 +26,38 @@
             <h1>Busca de Prescrições Líquidas</h1>
             <p>Acesso restrito a farmacêuticos credenciados</p>
 
-            <form id="formBusca" class="search-box">
-                <input 
-                    type="text" 
-                    id="inputQuery" 
-                    placeholder="Digite o nome comercial, princípio ativo ou instrução..."
-                />
-                <select id="selectForma">
-                    <option value="">Todas as formas</option>
-                    <option value="gotas">Gotas</option>
-                    <option value="xarope">Xarope</option>
-                    <option value="suspensão">Suspensão</option>
-                    <option value="solução">Solução</option>
-                </select>
-                <button type="submit" class="btn-primary">Pesquisar</button>
-            </form>
+<form id="formBusca" class="search-form">
+    <!-- Grupo da Barra de Busca Principal -->
+    <div class="search-input-group">
+        <input 
+            type="text" 
+            id="inputQuery" 
+            placeholder="Digite o nome do medicamento ou princípio ativo..."
+        >
+        <button type="submit" class="btn-primary">🔍 Buscar</button>
+    </div>
+
+    <!-- Select oculto para integração JS -->
+    <select id="selectForma" style="display: none;">
+        <option value="">Todas</option>
+        <option value="Gotas">Gotas</option>
+        <option value="Xarope">Xarope</option>
+        <option value="Suspensão">Suspensão</option>
+        <option value="Solução">Solução</option>
+    </select>
+
+    <!-- Chips Visuais de Filtro -->
+    <div class="filter-container">
+        <span class="filter-label">Filtrar por Forma Farmacêutica:</span>
+        <div class="filter-chips" id="filterChips">
+            <button type="button" class="chip-btn active" data-value="">Todas</button>
+            <button type="button" class="chip-btn" data-value="Gotas">💧 Gotas</button>
+            <button type="button" class="chip-btn" data-value="Xarope">🥄 Xarope</button>
+            <button type="button" class="chip-btn" data-value="Suspensão">🧪 Suspensão</button>
+            <button type="button" class="chip-btn" data-value="Solução">🧴 Solução</button>
+        </div>
+    </div>
+</form>
         </section>
 
         <section class="results-section">
