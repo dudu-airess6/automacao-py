@@ -474,3 +474,16 @@ body {
 @keyframes fadeInModal {
     to { opacity: 1; }
 }
+.chip-btn.chip-clear {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+    color: #dc2626;
+    margin-left: auto; /* Empurra o botão de limpar para a extremidade direita dos chips */
+}
+
+.chip-btn.chip-clear:hover {
+    background-color: #fee2e2;
+    border-color: #ef4444;
+    color: #b91c1c;
+    transform: translateY(-1px);
+}

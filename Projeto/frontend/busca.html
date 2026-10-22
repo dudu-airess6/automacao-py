@@ -26,38 +26,41 @@
             <h1>Busca de Prescrições Líquidas</h1>
             <p>Acesso restrito a farmacêuticos credenciados</p>
 
-            <form id="formBusca" class="search-form">
-                <!-- Grupo da Barra de Busca Principal -->
-                <div class="search-input-group">
-                    <input 
-                        type="text" 
-                        id="inputQuery" 
-                        placeholder="Digite o nome do medicamento ou princípio ativo..."
-                    >
-                    <button type="submit" class="btn-primary">🔍 Buscar</button>
-                </div>
+           <form id="formBusca" class="search-form">
+    <!-- Grupo da Barra de Busca Principal -->
+    <div class="search-input-group">
+        <input 
+            type="text" 
+            id="inputQuery" 
+            placeholder="Digite o nome do medicamento ou princípio ativo..."
+        >
+        <button type="submit" class="btn-primary">🔍 Buscar</button>
+    </div>
 
-                <!-- Select oculto mantido para ponte com o JS -->
-                <select id="selectForma" style="display: none;">
-                    <option value="">Todas</option>
-                    <option value="Gotas">Gotas</option>
-                    <option value="Xarope">Xarope</option>
-                    <option value="Suspensão">Suspensão</option>
-                    <option value="Solução">Solução</option>
-                </select>
+    <!-- Select oculto para ponte com JS -->
+    <select id="selectForma" style="display: none;">
+        <option value="">Todas</option>
+        <option value="Gotas">Gotas</option>
+        <option value="Xarope">Xarope</option>
+        <option value="Suspensão">Suspensão</option>
+        <option value="Solução">Solução</option>
+    </select>
 
-                <!-- Chips Visuais de Filtro -->
-                <div class="filter-container">
-                    <span class="filter-label">Filtrar por Forma Farmacêutica:</span>
-                    <div class="filter-chips" id="filterChips">
-                        <button type="button" class="chip-btn active" data-value="">Todas</button>
-                        <button type="button" class="chip-btn" data-value="Gotas">💧 Gotas</button>
-                        <button type="button" class="chip-btn" data-value="Xarope">🥄 Xarope</button>
-                        <button type="button" class="chip-btn" data-value="Suspensão">🧪 Suspensão</button>
-                        <button type="button" class="chip-btn" data-value="Solução">🧴 Solução</button>
-                    </div>
-                </div>
-            </form>
+    <!-- Chips Visuais de Filtro + Botão Limpar -->
+    <div class="filter-container">
+        <span class="filter-label">Filtrar por Forma Farmacêutica:</span>
+        <div class="filter-chips" id="filterChips">
+            <button type="button" class="chip-btn active" data-value="">Todas</button>
+            <button type="button" class="chip-btn" data-value="Gotas">💧 Gotas</button>
+            <button type="button" class="chip-btn" data-value="Xarope">🥄 Xarope</button>
+            <button type="button" class="chip-btn" data-value="Suspensão">🧪 Suspensão</button>
+            <button type="button" class="chip-btn" data-value="Solução">🧴 Solução</button>
+            
+            <!-- Ação de Limpar integrada aos chips -->
+            <button type="button" id="btnLimparFiltros" class="chip-btn chip-clear">🧹 Limpar Filtros</button>
+        </div>
+    </div>
+</form>
         </section>
 
         <section class="results-section">

@@ -33,13 +33,16 @@ class BuscaMedicamentosService:
     ) -> Dict[str, Any]:
         resultados = self.medicamentos
 
-        # Filtro por forma farmacêutica (ex: gotas, xarope, suspensão, solução)
+        # Filtro por múltiplas formas farmacêuticas (ex: "Gotas,Xarope")
         if forma:
-            forma_clean = forma.strip().lower()
-            resultados = [
-                m for m in resultados
-                if forma_clean in m.get("forma_farmaceutica", "").lower()
-            ]
+            # Separa por vírgula e limpa os espaços ("Gotas, Xarope" -> ["gotas", "xarope"])
+            formas_clean = [f.strip().lower() for f in forma.split(",") if f.strip()]
+            
+            if formas_clean:
+                resultados = [
+                    m for m in resultados
+                    if any(fc in m.get("forma_farmaceutica", "").lower() for fc in formas_clean)
+                ]
 
         # Filtro por termo (Nome Comercial, Princípio Ativo ou Instruções)
         if q:

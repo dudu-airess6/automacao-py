@@ -199,31 +199,85 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const inputQuery = document.getElementById('inputQuery');
-        const selectForma = document.getElementById('selectForma');
         const gridResultados = document.getElementById('gridResultados');
         const infoTotal = document.getElementById('infoTotal');
         const paginacao = document.getElementById('paginacao');
         const btnLogout = document.getElementById('btnLogout');
         const filterChips = document.getElementById('filterChips');
+        const btnLimparFiltros = document.getElementById('btnLimparFiltros');
 
         let paginaAtual = 1;
         const limitePorPagina = 12;
         let totalRegistrosAtual = 0;
 
-        // --- Interatividade dos Chips de Filtro (Gotas, Xarope, Suspensão, Solução) ---
-        if (filterChips && selectForma) {
-            const chips = filterChips.querySelectorAll('.chip-btn');
-            chips.forEach(chip => {
-                chip.addEventListener('click', () => {
-                    chips.forEach(c => c.classList.remove('active'));
-                    chip.classList.add('active');
+        // Captura formas ativas selecionadas nos chips
+        function obterFormasSelecionadas() {
+            if (!filterChips) return [];
+            const chipsAtivos = filterChips.querySelectorAll('.chip-btn[data-value].active');
+            return Array.from(chipsAtivos)
+                .map(c => c.getAttribute('data-value'))
+                .filter(Boolean);
+        }
 
-                    const valorSelecionado = chip.getAttribute('data-value') || '';
-                    selectForma.value = valorSelecionado;
+        // Debounce na digitação (400ms)
+        let timerDebounce = null;
+        if (inputQuery) {
+            inputQuery.addEventListener('input', () => {
+                clearTimeout(timerDebounce);
+                timerDebounce = setTimeout(() => {
+                    paginaAtual = 1;
+                    executarBusca();
+                }, 400);
+            });
+        }
+
+        // Múltipla seleção nos chips
+        if (filterChips) {
+            const chipTodas = filterChips.querySelector('.chip-btn[data-value=""]');
+            const chipsEspecificos = filterChips.querySelectorAll('.chip-btn[data-value]:not([data-value=""])');
+
+            if (chipTodas) {
+                chipTodas.addEventListener('click', () => {
+                    chipsEspecificos.forEach(c => c.classList.remove('active'));
+                    chipTodas.classList.add('active');
+                    paginaAtual = 1;
+                    executarBusca();
+                });
+            }
+
+            chipsEspecificos.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chip.classList.toggle('active');
+
+                    const temAlgumSelecionado = Array.from(chipsEspecificos).some(c => c.classList.contains('active'));
+
+                    if (temAlgumSelecionado) {
+                        if (chipTodas) chipTodas.classList.remove('active');
+                    } else {
+                        if (chipTodas) chipTodas.classList.add('active');
+                    }
 
                     paginaAtual = 1;
                     executarBusca();
                 });
+            });
+        }
+
+        // Botão Limpar Filtros
+        if (btnLimparFiltros) {
+            btnLimparFiltros.addEventListener('click', () => {
+                if (inputQuery) inputQuery.value = '';
+
+                if (filterChips) {
+                    const chips = filterChips.querySelectorAll('.chip-btn[data-value]');
+                    chips.forEach(c => c.classList.remove('active'));
+                    const chipTodas = filterChips.querySelector('.chip-btn[data-value=""]');
+                    if (chipTodas) chipTodas.classList.add('active');
+                }
+
+                paginaAtual = 1;
+                executarBusca();
+                mostrarToast('Filtros e busca resetados.', 'info');
             });
         }
 
@@ -241,17 +295,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         async function executarBusca() {
-            const query = inputQuery.value.trim();
-            const forma = selectForma ? selectForma.value : '';
+            const query = inputQuery ? inputQuery.value.trim() : '';
+            const formasSelecionadas = obterFormasSelecionadas();
 
             const params = new URLSearchParams({
                 page: paginaAtual,
                 limit: limitePorPagina
             });
+
             if (query) params.append('q', query);
-            if (forma) params.append('forma', forma);
+
+            // Envia filtros múltiplos unidos por vírgula (?forma=Gotas,Xarope)
+            if (formasSelecionadas.length > 0) {
+                params.append('forma', formasSelecionadas.join(','));
+            }
 
             gridResultados.innerHTML = '<p>Buscando medicamentos...</p>';
+            if (infoTotal) infoTotal.textContent = 'Atualizando estoque...';
 
             try {
                 const resposta = await fetch(`${API_BASE}/api/v1/buscar?${params.toString()}`, {
@@ -279,13 +339,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (erro) {
                 console.error('Erro na busca:', erro);
                 gridResultados.innerHTML = '<p style="color: red;">Erro ao carregar medicamentos. Verifique se o backend está rodando.</p>';
+                if (infoTotal) infoTotal.textContent = 'Total de registros em estoque: --';
             }
         }
 
         function renderizarResultados(dados) {
             const { total_encontrados, resultados } = dados;
 
-            // 1. Filtro seguro contra IDs indefinidos/nulos
             const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
             const idsFracionados = historicoFracionados
                 .map(item => (item && item.id !== undefined && item.id !== null) ? String(item.id) : null)
@@ -296,7 +356,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return medId !== undefined && medId !== null ? !idsFracionados.includes(String(medId)) : true;
             });
 
-            // 2. Atualiza contagem total em estoque
             totalRegistrosAtual = Math.max(0, (total_encontrados || 0) - idsFracionados.length);
 
             if (infoTotal) {
@@ -311,7 +370,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 3. Renderiza os Cards de Medicamentos
             resultadosFiltrados.forEach(med => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -336,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 gridResultados.appendChild(card);
             });
 
-            // 4. Paginação Numérica
             const totalPaginas = Math.ceil(totalRegistrosAtual / limitePorPagina);
             if (paginacao) {
                 renderizarControlesPaginacao(totalPaginas, paginaAtual, paginacao, (novaPagina) => {
@@ -417,7 +474,6 @@ document.addEventListener('DOMContentLoaded', () => {
             container.appendChild(btnProxima);
         }
 
-        // Lógica Async de Fracionamento com Modal Customizado e Toast
         async function fracionarMedicamentoLocal(med, cardElement) {
             const nomeMed = med.nome_comercial || med.nome || 'Medicamento';
             const medId = med.id || med.id_medicamento || Date.now();
