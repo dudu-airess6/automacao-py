@@ -29,7 +29,7 @@ async def lifespan(app: FastAPI):
         test_user = db.query(Usuario).filter(Usuario.login == "testuser").first()
         if not test_user:
             novo_teste = Farmaceutico(
-                nome="Usuario Teste k6",
+                nome="Usuario Teste",
                 login="testuser",
                 senha_hash="secretpassword",
                 crf="12345"
