@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${titulo}</h3>
                     <p>${mensagem}</p>
                     <div class="custom-modal-actions">
-                        <button class="btn-secondary" id="btnModalCancelar" style="padding: 8px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: #fff; cursor: pointer;">Cancelar</button>
-                        <button class="btn-primary" id="btnModalConfirmar" style="padding: 8px 16px; border-radius: 6px; border: none; background: #10b981; color: white; font-weight: bold; cursor: pointer;">Confirmar</button>
+                        <button class="btn-secondary" id="btnModalCancelar">Cancelar</button>
+                        <button class="btn-primary" id="btnModalConfirmar">Confirmar</button>
                     </div>
                 </div>
             `;
@@ -204,10 +204,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const infoTotal = document.getElementById('infoTotal');
         const paginacao = document.getElementById('paginacao');
         const btnLogout = document.getElementById('btnLogout');
+        const filterChips = document.getElementById('filterChips');
 
         let paginaAtual = 1;
         const limitePorPagina = 12;
         let totalRegistrosAtual = 0;
+
+        // --- Interatividade dos Chips de Filtro (Gotas, Xarope, Suspensão, Solução) ---
+        if (filterChips && selectForma) {
+            const chips = filterChips.querySelectorAll('.chip-btn');
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chips.forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+
+                    const valorSelecionado = chip.getAttribute('data-value') || '';
+                    selectForma.value = valorSelecionado;
+
+                    paginaAtual = 1;
+                    executarBusca();
+                });
+            });
+        }
 
         if (btnLogout) {
             btnLogout.addEventListener('click', () => {
@@ -224,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         async function executarBusca() {
             const query = inputQuery.value.trim();
-            const forma = selectForma.value;
+            const forma = selectForma ? selectForma.value : '';
 
             const params = new URLSearchParams({
                 page: paginaAtual,
@@ -293,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 3. Renderiza os Cards
+            // 3. Renderiza os Cards de Medicamentos
             resultadosFiltrados.forEach(med => {
                 const card = document.createElement('div');
                 card.className = 'card';

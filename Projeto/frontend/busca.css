@@ -11,7 +11,9 @@ body {
     min-height: 100vh;
 }
 
-/* Header Topbar */
+/* ============================================================
+   HEADER / TOPBAR & NAVEGAÇÃO
+   ============================================================ */
 .topbar {
     background-color: #ffffff;
     display: flex;
@@ -35,6 +37,35 @@ body {
 
 .logo h2 span {
     color: #77dd77;
+}
+
+.nav-links {
+    display: flex;
+    gap: 12px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-item:hover {
+    color: #4a4a4a;
+    background-color: #f3f4f6;
+}
+
+.nav-item.active {
+    color: #278527;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
 }
 
 .user-info {
@@ -66,14 +97,15 @@ body {
     border-color: #ef4444;
 }
 
-/* Conteúdo Principal */
+/* ============================================================
+   CONTEÚDO PRINCIPAL & FORMULÁRIO DE BUSCA
+   ============================================================ */
 .container {
     max-width: 1100px;
     margin: 30px auto;
     padding: 0 20px;
 }
 
-/* Card Superior de Busca */
 .search-section {
     background-color: #ffffff;
     padding: 30px;
@@ -94,37 +126,35 @@ body {
     margin-bottom: 20px;
 }
 
-.search-box {
+.search-form {
     display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
 }
 
-.search-box input, 
-.search-box select {
-    padding: 12px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-    color: #4a4a4a;
-    background-color: #f9fafb;
-    outline: none;
-    transition: border-color 0.3s, background-color 0.3s;
+.search-input-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
 }
 
-.search-box input {
+.search-input-group input[type="text"] {
     flex: 1;
-    min-width: 260px;
+    background-color: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    outline: none;
 }
 
-.search-box select {
-    min-width: 160px;
-}
-
-.search-box input:focus, 
-.search-box select:focus {
-    border-color: #77dd77;
+.search-input-group input[type="text"]:focus {
     background-color: #ffffff;
+    border-color: #278527;
+    box-shadow: 0 0 0 3px rgba(39, 133, 39, 0.15);
 }
 
 .btn-primary {
@@ -143,7 +173,75 @@ body {
     background-color: #66cc66;
 }
 
-/* Resultados da Busca */
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #d1d5db;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+/* ============================================================
+   CHIPS DE FILTRO (Forma Farmacêutica)
+   ============================================================ */
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.chip-btn {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    color: #4b5563;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    outline: none;
+}
+
+.chip-btn:hover {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    transform: translateY(-1px);
+}
+
+.chip-btn.active {
+    background-color: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+    box-shadow: 0 2px 6px rgba(39, 133, 39, 0.12);
+}
+
+/* ============================================================
+   GRID DE RESULTADOS E CARDS DE MEDICAMENTOS
+   ============================================================ */
 .results-header {
     margin-bottom: 15px;
     color: #6b7280;
@@ -157,7 +255,6 @@ body {
     gap: 20px;
 }
 
-/* Cards Individuais de Medicamento */
 .card {
     background: #ffffff;
     border-radius: 12px;
@@ -205,48 +302,6 @@ body {
     text-transform: capitalize;
 }
 
-/* Paginação */
-.pagination-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-.pagination-controls button {
-    background-color: #ffffff;
-    color: #77dd77;
-    border: 1px solid #77dd77;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.pagination-controls button:hover:not(:disabled) {
-    background-color: #f0fdf4;
-}
-
-.pagination-controls button:disabled {
-    opacity: 0.4;
-    border-color: #d1d5db;
-    color: #9ca3af;
-    cursor: not-allowed;
-}
-
-#labelPagina {
-    font-size: 14px;
-    color: #6b7280;
-    font-weight: 600;
-}
-
-.hidden {
-    display: none;
-}
-/* Botão de Fracionar nos Cards */
 .btn-fracionar {
     margin-top: 15px;
     width: 100%;
@@ -273,234 +328,10 @@ body {
     background-color: #94a3b8;
     cursor: not-allowed;
 }
-/* ==========================================================================
-   Navegação por Abas (Para alternar entre Busca Geral e Fracionados)
-   ========================================================================== */
-.nav-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e5e7eb;
-}
 
-.tab-btn {
-    background: transparent;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6b7280;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.tab-btn.active {
-    color: #77dd77;
-    border-bottom-color: #77dd77;
-}
-
-.tab-btn:hover:not(.active) {
-    color: #4a4a4a;
-}
-
-/* ==========================================================================
-   Modal de Fracionamento (Pop-up)
-   ========================================================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-}
-
-.modal-content {
-    background-color: #ffffff;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 650px;
-    padding: 30px;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.modal-header h2 {
-    font-size: 20px;
-    color: #4a4a4a;
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    font-size: 22px;
-    color: #9ca3af;
-    cursor: pointer;
-}
-
-.btn-close:hover {
-    color: #ef4444;
-}
-
-/* ==========================================================================
-   Formulários e Grids da Tela de Fracionamento
-   ========================================================================== */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group.full-width {
-    grid-column: span 2;
-}
-
-.form-group label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #4a4a4a;
-}
-
-.form-group input,
-.form-group select {
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 14px;
-    background-color: #f9fafb;
-    outline: none;
-    transition: border-color 0.2s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #77dd77;
-    background-color: #ffffff;
-}
-
-/* Caixa de Resumo / Pré-visualização da Etiqueta Fracionada */
-.preview-card {
-    background-color: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 15px;
-}
-
-.preview-card h4 {
-    font-size: 14px;
-    color: #334155;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.preview-details {
-    font-size: 13px;
-    color: #64748b;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-}
-
-/* ==========================================================================
-   Ações e Botões Adicionais
-   ========================================================================== */
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid #e5e7eb;
-}
-
-.btn-secondary {
-    background-color: #f3f4f6;
-    color: #4b5563;
-    border: 1px solid #d1d5db;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.btn-secondary:hover {
-    background-color: #e5e7eb;
-}
-
-.btn-print {
-    background-color: #059669;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.btn-print:hover {
-    background-color: #047857;
-}
-/* Navegação na Topbar */
-.nav-links {
-    display: flex;
-    gap: 12px;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: #6b7280;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.nav-item:hover {
-    color: #4a4a4a;
-    background-color: #f3f4f6;
-}
-
-.nav-item.active {
-    color: #278527;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-}
-/* Estilos para a Paginação Numérica */
+/* ============================================================
+   PAGINAÇÃO NUMÉRICA DINÂMICA
+   ============================================================ */
 .pagination-controls {
     display: flex;
     justify-content: center;
@@ -510,6 +341,22 @@ body {
     flex-wrap: wrap;
 }
 
+.pagination-controls button {
+    background-color: #ffffff;
+    color: #77dd77;
+    border: 1px solid #77dd77;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+    background-color: #f0fdf4;
+}
+
 .pagination-controls button.active {
     background-color: #77dd77;
     color: #ffffff;
@@ -517,11 +364,23 @@ body {
     font-weight: bold;
 }
 
+.pagination-controls button:disabled {
+    opacity: 0.4;
+    border-color: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
 .pagination-ellipsis {
     color: #6b7280;
     font-weight: bold;
     padding: 0 4px;
 }
+
+.hidden {
+    display: none;
+}
+
 /* ============================================================
    TOAST NOTIFICATIONS (Alertas Flutuantes)
    ============================================================ */
@@ -614,86 +473,4 @@ body {
 
 @keyframes fadeInModal {
     to { opacity: 1; }
-}
-/* ============================================================
-   FILTRO DE TIPO DE MEDICAMENTO (Chips / Pílulas)
-   ============================================================ */
-.filter-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 12px;
-}
-
-.filter-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #4b5563;
-}
-
-.filter-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.chip-btn {
-    background-color: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    color: #4b5563;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    outline: none;
-}
-
-.chip-btn:hover {
-    background-color: #e5e7eb;
-    color: #1f2937;
-    transform: translateY(-1px);
-}
-
-.chip-btn.active {
-    background-color: #f0fdf4;
-    border-color: #86efac;
-    color: #166534;
-    box-shadow: 0 2px 6px rgba(39, 133, 39, 0.12);
-}
-/* Formulário de Busca */
-.search-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-}
-
-/* Linha do Campo de Entrada e Botão */
-.search-input-group {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-.search-input-group input[type="text"] {
-    flex: 1; /* Ocupa todo o espaço restante */
-    background-color: #f9fafb;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 14px;
-    color: #1f2937;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.search-input-group input[type="text"]:focus {
-    background-color: #ffffff;
-    border-color: #278527;
-    box-shadow: 0 0 0 3px rgba(39, 133, 39, 0.15);
 }
