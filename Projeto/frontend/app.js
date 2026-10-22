@@ -2,6 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const API_BASE = 'http://127.0.0.1:8001';
 
     // ============================================================
+    // 0. NAVEGAÇÃO / NAVBAR (Ativação Automática de Abas)
+    // ============================================================
+    const linkAtual = window.location.pathname.split('/').pop();
+    const navLinks = document.querySelectorAll('.nav-item');
+
+    navLinks.forEach(link => {
+        const hrefLink = link.getAttribute('href');
+        if (hrefLink === linkAtual) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+
+    // ============================================================
     // 1. TELA DE LOGIN (index.html)
     // ============================================================
     const loginForm = document.getElementById('loginForm');
@@ -145,9 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const gridResultados = document.getElementById('gridResultados');
         const infoTotal = document.getElementById('infoTotal');
         const paginacao = document.getElementById('paginacao');
-        const btnAnterior = document.getElementById('btnAnterior');
-        const btnProxima = document.getElementById('btnProxima');
-        const labelPagina = document.getElementById('labelPagina');
         const btnLogout = document.getElementById('btnLogout');
 
         let paginaAtual = 1;
@@ -166,22 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
             paginaAtual = 1;
             executarBusca();
         });
-
-        if (btnAnterior) {
-            btnAnterior.addEventListener('click', () => {
-                if (paginaAtual > 1) {
-                    paginaAtual--;
-                    executarBusca();
-                }
-            });
-        }
-
-        if (btnProxima) {
-            btnProxima.addEventListener('click', () => {
-                paginaAtual++;
-                executarBusca();
-            });
-        }
 
         async function executarBusca() {
             const query = inputQuery.value.trim();
@@ -226,16 +222,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function renderizarResultados(dados) {
-            const { total_encontrados, resultados, pagina, limite } = dados;
+            const { total_encontrados, resultados } = dados;
 
-            // Busca os itens já fracionados no localStorage
+            // 1. Oculta medicamentos fracionados
             const historicoFracionados = JSON.parse(localStorage.getItem('medicamentos_fracionados') || '[]');
             const idsFracionados = historicoFracionados.map(item => String(item.id));
-
-            // Filtra os resultados vindos da API excluindo os já fracionados
             const resultadosFiltrados = (resultados || []).filter(med => !idsFracionados.includes(String(med.id)));
 
-            // Calcula o total real do estoque descontando a quantidade de fracionados
+            // 2. Atualiza contagem total em estoque
             totalRegistrosAtual = Math.max(0, (total_encontrados || 0) - historicoFracionados.length);
 
             if (infoTotal) {
@@ -250,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // 3. Renderiza os Cards de Medicamentos
             resultadosFiltrados.forEach(med => {
                 const card = document.createElement('div');
                 card.className = 'card';
@@ -274,14 +269,91 @@ document.addEventListener('DOMContentLoaded', () => {
                 gridResultados.appendChild(card);
             });
 
+            // 4. Renderiza Paginação Numérica com Reticências
+            const totalPaginas = Math.ceil(totalRegistrosAtual / limitePorPagina);
             if (paginacao) {
-                paginacao.classList.remove('hidden');
-                labelPagina.textContent = `Página ${pagina}`;
-                btnAnterior.disabled = (pagina <= 1);
-                btnProxima.disabled = (pagina * limite >= total_encontrados);
+                renderizarControlesPaginacao(totalPaginas, paginaAtual, paginacao, (novaPagina) => {
+                    paginaAtual = novaPagina;
+                    executarBusca();
+                });
             }
         }
 
+        // Lógica para montar os botões numéricos [1] [2] [3] [4] [...] [Última]
+        function renderizarControlesPaginacao(totalPaginas, paginaAtual, container, aoMudarPagina) {
+            container.innerHTML = '';
+
+            if (totalPaginas <= 1) {
+                container.classList.add('hidden');
+                return;
+            }
+            container.classList.remove('hidden');
+
+            // Botão Anterior
+            const btnAnterior = document.createElement('button');
+            btnAnterior.textContent = '« Anterior';
+            btnAnterior.disabled = (paginaAtual === 1);
+            btnAnterior.addEventListener('click', () => aoMudarPagina(paginaAtual - 1));
+            container.appendChild(btnAnterior);
+
+            let paginas = [];
+
+            if (totalPaginas <= 6) {
+                for (let i = 1; i <= totalPaginas; i++) paginas.push(i);
+            } else {
+                paginas.push(1);
+
+                let inicio = Math.max(2, paginaAtual);
+                let fim = Math.min(totalPaginas - 1, paginaAtual + 2);
+
+                if (paginaAtual === 1) {
+                    fim = Math.min(totalPaginas - 1, 3);
+                }
+
+                if (inicio > 2) {
+                    paginas.push('...');
+                }
+
+                for (let i = inicio; i <= fim; i++) {
+                    if (!paginas.includes(i)) paginas.push(i);
+                }
+
+                if (fim < totalPaginas - 1) {
+                    paginas.push('...');
+                }
+
+                if (!paginas.includes(totalPaginas)) {
+                    paginas.push(totalPaginas);
+                }
+            }
+
+            paginas.forEach(p => {
+                if (p === '...') {
+                    const span = document.createElement('span');
+                    span.textContent = '...';
+                    span.className = 'pagination-ellipsis';
+                    container.appendChild(span);
+                } else {
+                    const btnPage = document.createElement('button');
+                    btnPage.textContent = p;
+                    if (p === paginaAtual) {
+                        btnPage.classList.add('active');
+                    } else {
+                        btnPage.addEventListener('click', () => aoMudarPagina(p));
+                    }
+                    container.appendChild(btnPage);
+                }
+            });
+
+            // Botão Próxima
+            const btnProxima = document.createElement('button');
+            btnProxima.textContent = 'Próxima »';
+            btnProxima.disabled = (paginaAtual === totalPaginas);
+            btnProxima.addEventListener('click', () => aoMudarPagina(paginaAtual + 1));
+            container.appendChild(btnProxima);
+        }
+
+        // Lógica de Fracionamento 100% Frontend
         function fracionarMedicamentoLocal(med, cardElement) {
             const nomeMed = med.nome_comercial || med.nome || 'Medicamento';
             const confirmacao = confirm(`Deseja fracionar o medicamento "${nomeMed}"?\nEle será removido do estoque visual e salvo na tela de Fracionados.`);
@@ -406,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </head>
                 <body>
                     <div class="header">
-                        <h1>PharmaFrac — Relatório de Fracionamento</h1>
+                        <h1>DozzaHealth — Relatório de Fracionamento</h1>
                     </div>
                     <div class="box">
                         <p><strong>Medicamento:</strong> ${item.nome_medicamento}</p>
