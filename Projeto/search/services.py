@@ -15,7 +15,8 @@ class BuscaMedicamentosService:
             raise FileNotFoundError(f"Dataset não encontrado no caminho: {self.csv_path}")
 
         self.medicamentos.clear()
-        with open(self.csv_path, mode="r", encoding="utf-8") as f:
+        # utf-8-sig remove automaticamente o caractere invisível BOM no Windows
+        with open(self.csv_path, mode="r", encoding="utf-8-sig") as f:
             reader = csv.DictReader(f)
             for row in reader:
                 if "id" in row and row["id"]:
@@ -33,12 +34,17 @@ class BuscaMedicamentosService:
     ) -> Dict[str, Any]:
         resultados = self.medicamentos
 
-        # Filtro por múltiplas formas farmacêuticas (ex: "Gotas,Xarope")
+        # Filtro por múltiplas formas farmacêuticas (ex: "Gotas,Xarope,Solucao,Spray")
         if forma:
             # Separa por vírgula e limpa os espaços ("Gotas, Xarope" -> ["gotas", "xarope"])
             formas_clean = [f.strip().lower() for f in forma.split(",") if f.strip()]
             
             if formas_clean:
+                # Regra de equivalência: se 'solucao' estiver nos filtros, inclui 'elixir' automaticamente
+                if any("soluc" in f or "soluç" in f for f in formas_clean):
+                    if "elixir" not in formas_clean:
+                        formas_clean.append("elixir")
+
                 resultados = [
                     m for m in resultados
                     if any(fc in m.get("forma_farmaceutica", "").lower() for fc in formas_clean)
